@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object result) {
                 String res = (String) result;
-                if(res.equals("true")){
+                if("true".equals(res)){
                     Intent i = new Intent(MainActivity.this, ContentActivity.class);
                     i.putExtra("userName", userName);
                     startActivity(i);

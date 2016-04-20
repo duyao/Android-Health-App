@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean checkUser(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + User.TABLE_NAME +
-                " WHERE " + User.COLUMN_ID + " = " + id, null);
+                " WHERE " + User.COLUMN_NAME + " = " + id, null);
         if( cursor.moveToFirst() ){
             return true;
         }else{

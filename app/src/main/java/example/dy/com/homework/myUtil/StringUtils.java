@@ -13,7 +13,7 @@ public class StringUtils {
     public static final String IPString = "172.16.120.97";
 
     public static String getPasswordEncryption(String inputStr) {
-        System.out.println("=======加密前的数据:" + inputStr);
+//        System.out.println("=======加密前的数据:" + inputStr);
         BigInteger bigInteger = null;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -23,14 +23,14 @@ public class StringUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("MD5加密后:" + bigInteger.toString(16));
+//        System.out.println("MD5加密后:" + bigInteger.toString(16));
         return bigInteger.toString(16);
     }
 
     public static String getCurTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         String time = sdf.format(new Date());
-        System.out.println(time);
+//        System.out.println(time);
         return time;
     }
 }

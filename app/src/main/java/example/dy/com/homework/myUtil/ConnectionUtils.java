@@ -85,7 +85,8 @@ public class ConnectionUtils {
         void onFail();
     }
 
-    public ConnectionUtils(final String url, final ConnectionCallback callback, final JSONObject jsonObject) {
+    //post
+    public ConnectionUtils(final String url, final ConnectionCallback callback, final String str, int i) {
 
 
         new AsyncTask<Void, Void, String>() {
@@ -107,7 +108,6 @@ public class ConnectionUtils {
                     urlConnection.connect();
 
                     printout = new DataOutputStream(urlConnection.getOutputStream());
-                    String str = jsonObject.toString();
                     byte[] data = str.getBytes("UTF-8");
                     printout.write(data);
                     printout.flush();

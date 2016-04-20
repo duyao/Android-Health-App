@@ -16,6 +16,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
 
 import example.dy.com.homework.entity.JsonUser;
 import example.dy.com.homework.entity.User;
@@ -26,10 +29,10 @@ import example.dy.com.homework.myUtil.StringUtils;
 public class ContentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView nameText;
-    String curUserId;
+    String curUserName;
     private DatabaseHelper dbHelper;
     private  static final String IP = StringUtils.IPString;
-    private static final String URL = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user";
+    private static final String URL = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user/findByName";
     JsonUser user = null;
 
     @Override
@@ -61,21 +64,26 @@ public class ContentActivity extends AppCompatActivity
 
 //        nameText = (TextView) this.findViewById(R.id.curUserName);
         Intent i = getIntent();
-        curUserId = (String) i.getSerializableExtra("userName");
+        curUserName = (String) i.getSerializableExtra("userName");
         dbHelper = new DatabaseHelper(getApplicationContext());
-        System.out.println(curUserId);
+        dbHelper.findAllUser();
+
+        //get Usr by name
         new ConnectionUtils(URL, new ConnectionUtils.ConnectionCallback() {
             @Override
             public void onSuccess(Object result) {
+//                System.out.println("reslut"+result);
                 Gson gson = new Gson();
-                user = gson.fromJson(result.toString(), JsonUser.class);
-                System.out.println("fromJson->"+user);
+                //Json object array [{..},{}]
+                List<JsonUser> list= gson.fromJson(result.toString(), new TypeToken<List<JsonUser>>(){}.getType());
+                user = list.get(0);
+//                System.out.println("fromJson->"+user);
 
 
-                dbHelper.findAllUser();
-                System.out.println("insert before===================");
+//                dbHelper.findAllUser();
+//                System.out.println("insert before===================");
                 dbHelper = new DatabaseHelper(getApplicationContext());
-                if(dbHelper.checkUser(curUserId)){
+                if(dbHelper.checkUser(curUserName)){
                     System.out.println("exsist");
                 }else{
                     System.out.println("add User");
@@ -87,8 +95,6 @@ public class ContentActivity extends AppCompatActivity
                     tmp.setLongitude(0);
                     tmp.setRegistration(StringUtils.getCurTime());
                     dbHelper.addUser(tmp);
-
-
                 }
                 System.out.println("insert after===================");
                 dbHelper.findAllUser();
@@ -99,7 +105,7 @@ public class ContentActivity extends AppCompatActivity
                 System.out.println("cannot find user in server");
 
             }
-        },curUserId);
+        }, curUserName);
         System.out.println("GET user ->" + user);
 
 

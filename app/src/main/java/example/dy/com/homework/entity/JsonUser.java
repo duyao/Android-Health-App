@@ -105,6 +105,18 @@ public class JsonUser {
         this.goal = goal;
     }
 
+    public JsonUser(String password, String name, int age, Character gender, double height, double weight, int activityLevel, int stepsMile, int goal) {
+        this.password = password;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.height = height;
+        this.weight = weight;
+        this.activityLevel = activityLevel;
+        this.stepsMile = stepsMile;
+        this.goal = goal;
+    }
+
     public JsonUser(String id, String password, String name, int age, Character gender, double height, double weight, int activityLevel, int stepsMile, double bmr, int goal) {
 
         this.id = id;
