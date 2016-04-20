@@ -1,9 +1,12 @@
 package example.dy.com.homework.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by dy on 2016/4/19.
  */
-public class JsonUser {
+public class JsonUser implements Parcelable{
 
     private String id;
     private String password;
@@ -16,6 +19,34 @@ public class JsonUser {
     private int stepsMile;
     private double bmr;
     private int goal;
+
+    protected JsonUser(Parcel in) {
+        id = in.readString();
+        password = in.readString();
+        name = in.readString();
+        age = in.readInt();
+        height = in.readDouble();
+        weight = in.readDouble();
+        activityLevel = in.readInt();
+        stepsMile = in.readInt();
+        bmr = in.readDouble();
+        goal = in.readInt();
+    }
+
+    public static final Creator<JsonUser> CREATOR = new Creator<JsonUser>() {
+        @Override
+        public JsonUser createFromParcel(Parcel in) {
+            return new JsonUser(in);
+        }
+
+        @Override
+        public JsonUser[] newArray(int size) {
+            return new JsonUser[size];
+        }
+    };
+
+    public JsonUser() {
+    }
 
     public String getId() {
         return id;
@@ -147,5 +178,24 @@ public class JsonUser {
                 ", bmr=" + bmr +
                 ", goal=" + goal +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(password);
+        dest.writeString(name);
+        dest.writeInt(age);
+        dest.writeDouble(height);
+        dest.writeDouble(weight);
+        dest.writeInt(activityLevel);
+        dest.writeInt(stepsMile);
+        dest.writeDouble(bmr);
+        dest.writeInt(goal);
     }
 }

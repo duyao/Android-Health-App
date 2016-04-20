@@ -78,6 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 list.add(u);
             } while(cursor.moveToNext());
         }
+
         System.out.println("get user from sqlite");
         for (User u : list) {
             System.out.println(u);
