@@ -34,6 +34,7 @@ public class ContentActivity extends AppCompatActivity
     private  static final String IP = StringUtils.IPString;
     private static final String URL = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user/findByName";
     JsonUser user = null;
+    private static final String UPDATEUSER = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user";
 
     private TextView curNameTextView;
     private FragmentManager fragmentManager = null;
@@ -80,7 +81,7 @@ public class ContentActivity extends AppCompatActivity
                 //Json object array [{..},{}]
                 List<JsonUser> list= gson.fromJson(result.toString(), new TypeToken<List<JsonUser>>(){}.getType());
                 user = list.get(0);
-                System.out.println("fromJson->"+user);
+//                System.out.println("fromJson->"+user);
 //                dbHelper.findAllUser();
 //                System.out.println("insert before===================");
                 dbHelper = new DatabaseHelper(getApplicationContext());
@@ -98,7 +99,7 @@ public class ContentActivity extends AppCompatActivity
                     dbHelper.addUser(tmp);
                 }
 //                System.out.println("insert after===================");
-//                dbHelper.findAllUser();
+                dbHelper.findAllUser();
 
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("user", user);
@@ -151,7 +152,6 @@ public class ContentActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -169,17 +169,37 @@ public class ContentActivity extends AppCompatActivity
 
         }
 
-        Bundle b = new Bundle();
-        System.out.println("select->"+user);
-        b.putParcelable("user", user);
+        //get Usr by name
+        final Fragment finalNextFragment = nextFragment;
+        new ConnectionUtils(UPDATEUSER, new ConnectionUtils.ConnectionCallback() {
+            @Override
+            public void onSuccess(Object result) {
+//                System.out.println("reslut"+result);
+                Gson gson = new Gson();
+                JsonUser newUser= gson.fromJson(result.toString(), new TypeToken<JsonUser>(){}.getType());
+//                System.out.println("fromJson->" + newUser);
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user", newUser);
+                finalNextFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.content_frame, finalNextFragment).commit();
+
+            }
+
+            @Override
+            public void onFail() {
+                System.out.println("cannot find user in server");
+
+            }
+        }, user.getId());
+
+
 //        assert nextFragment != null;
-        nextFragment.setArguments(b);
-        fragmentManager.beginTransaction().replace(R.id.content_frame,nextFragment).commit();
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-
 
     }
 }
