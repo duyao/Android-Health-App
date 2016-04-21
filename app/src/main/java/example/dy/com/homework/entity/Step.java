@@ -53,6 +53,11 @@ public class Step implements Parcelable {
         }
     };
 
+    public Step(int steps, String date) {
+        this.steps = steps;
+        this.date = date;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -97,5 +102,15 @@ public class Step implements Parcelable {
         dest.writeString(userId);
         dest.writeInt(steps);
         dest.writeString(date);
+    }
+
+    @Override
+    public String toString() {
+        return "Step{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", steps=" + steps +
+                ", date='" + date + '\'' +
+                '}';
     }
 }

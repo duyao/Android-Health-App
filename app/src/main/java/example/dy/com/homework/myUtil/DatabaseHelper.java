@@ -40,43 +40,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addUser(User u) {
+    public boolean addUser(User u) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(User.COLUMN_ID, u.getId());
         values.put(User.COLUMN_NAME, u.getName());
         values.put(User.COLUMN_PASSWORD, StringUtils.getPasswordEncryption(u.getPassword()));
         values.put(User.COLUMN_REGISTRATION, StringUtils.getCurTime());
-        values.put(User.COLUMN_LATITUDE, 0);
-        values.put(User.COLUMN_LONGITUDE, 0);
-        db.insert(User.TABLE_NAME, null, values);
+        values.put(User.COLUMN_LATITUDE, 0.0);
+        values.put(User.COLUMN_LONGITUDE, 0.0);
+        Long res = db.insert(User.TABLE_NAME, null, values);
+        System.out.println("add res->"+res);
         db.close();
+        if(res == -1){
+            return false;
+        }else{
+            return true;
+        }
     }
 
-    public boolean checkUser(String id) {
+    public boolean checkUser(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + User.TABLE_NAME +
-                " WHERE " + User.COLUMN_NAME + " = " + id, null);
-        if( cursor.moveToFirst() ){
+                " WHERE " + User.COLUMN_NAME + " = " + "'" + name + "'", null);
+        if (cursor.moveToFirst()) {
             return true;
-        }else{
-            return  false;
+        } else {
+            return false;
         }
     }
 
 
-    public void addSteps(Step s) {
-
-    }
-
-    public List<User> findAllUser(){
+    public List<User> findAllUser() {
         SQLiteDatabase db = this.getReadableDatabase();
         List<User> list = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM " + User.TABLE_NAME, null);
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
-                User u = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getDouble(4),cursor.getDouble(5));
+                User u = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getDouble(4), cursor.getDouble(5));
                 list.add(u);
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         System.out.println("get user from sqlite");
@@ -86,5 +89,59 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+
+    public List<Step> getStep(String id, String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Step> list = new ArrayList<>();
+        String sql = "SELECT * FROM " + Step.TABLE_NAME + " WHERE " + Step.COLUMN_DATE + " LIKE '" + date
+                + "%' AND " + Step.COLUMN_USERID + " = '" + id + "' ORDER BY " + Step.COLUMN_DATE;
+        System.out.println(sql);
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Step s = new Step(cursor.getInt(2),cursor.getString(3));
+                list.add(s);
+            } while (cursor.moveToNext());
+        }
+
+        System.out.println("get user from sqlite");
+        for (Step step:list) {
+            System.out.println(step);
+        }
+        return list;
+    }
+
+    public boolean addStep(String step, String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Step.COLUMN_USERID, id);
+        values.put(Step.COLUMN_STEPS, step);
+        values.put(Step.COLUMN_DATE, StringUtils.getCurTime());
+        long res = db.insert(Step.TABLE_NAME, null, values);
+        db.close();
+        if(res == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public List<Step> findAllStep() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Step> list = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Step.TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Step u = new Step(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3));
+                list.add(u);
+            } while (cursor.moveToNext());
+        }
+
+        System.out.println("get step from sqlite");
+        for (Step u : list) {
+            System.out.println(u);
+        }
+        return list;
+    }
 
 }

@@ -35,7 +35,7 @@ public class User implements Parcelable {
 
     public static final String CREATE_STATEMENT =
             "CREATE TABLE " + TABLE_NAME + "(" +
-                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    COLUMN_ID + " TEXT PRIMARY KEY NOT NULL, " +
                     COLUMN_NAME + " TEXT NOT NULL, " +
                     COLUMN_PASSWORD + " TEXT NOT NULL, " +
                     COLUMN_REGISTRATION + " TEXT NOT NULL, " +

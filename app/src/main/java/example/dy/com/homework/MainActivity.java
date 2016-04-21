@@ -35,22 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initData() {
-        String userName = nameText.getText().toString().trim();
-        new ConnectionUtils(URL, new ConnectionUtils.ConnectionCallback() {
-            @Override
-            public void onSuccess(Object result) {
-                String content = (String) result;
-                System.out.println("content:" + result);
-                passwordText.setText(content);
-            }
-
-            @Override
-            public void onFail() {
-
-            }
-        },userName);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(MainActivity.this, ContentActivity.class);
                     i.putExtra("userName", userName);
                     startActivity(i);
+                    MainActivity.this.finish();
                 }else{
                     onFail();
                 }

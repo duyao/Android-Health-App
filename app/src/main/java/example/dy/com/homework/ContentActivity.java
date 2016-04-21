@@ -82,8 +82,8 @@ public class ContentActivity extends AppCompatActivity
                 List<JsonUser> list= gson.fromJson(result.toString(), new TypeToken<List<JsonUser>>(){}.getType());
                 user = list.get(0);
 //                System.out.println("fromJson->"+user);
-//                dbHelper.findAllUser();
-//                System.out.println("insert before===================");
+                dbHelper.findAllUser();
+                System.out.println("insert before===================");
                 dbHelper = new DatabaseHelper(getApplicationContext());
                 if(dbHelper.checkUser(curUserName)){
                     System.out.println("exsist");
@@ -159,18 +159,26 @@ public class ContentActivity extends AppCompatActivity
         Fragment nextFragment = null;
 
 
+
+
         if (id == R.id.nav_calorie_goal) {
             nextFragment = new CalorieGoalFragment();
         } else if (id == R.id.nav_progress_report) {
 
         } else if (id == R.id.nav_steps) {
+            nextFragment = new StepFragment();
 
         } else if (id == R.id.nav_track_calorie) {
+
+        }else if(id == R.id.nav_map){
+
+        }else if(id == R.id.nav_diet){
 
         }
 
         //get Usr by name
         final Fragment finalNextFragment = nextFragment;
+        System.out.println("fff->"+finalNextFragment.getId());
         new ConnectionUtils(UPDATEUSER, new ConnectionUtils.ConnectionCallback() {
             @Override
             public void onSuccess(Object result) {

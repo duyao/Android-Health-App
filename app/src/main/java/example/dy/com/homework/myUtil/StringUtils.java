@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by dy on 2016/4/19.
  */
 public class StringUtils {
-    //    public static final  String IPString  = "10.50.139.109";
+    //        public static final  String IPString  = "172.16.153.14";
     public static final String IPString = "172.16.120.97";
 
     public static String getPasswordEncryption(String inputStr) {

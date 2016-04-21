@@ -6,7 +6,7 @@
             android:id="@+id/nav_calorie_goal"
             android:title="Calorie Goal" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_diet"
             android:title="My Daily Diet" />
         <item
             android:id="@+id/nav_steps"
