@@ -31,10 +31,14 @@ public class ContentActivity extends AppCompatActivity
     private TextView nameText;
     String curUserName;
     private DatabaseHelper dbHelper;
-    private  static final String IP = StringUtils.IPString;
-    private static final String URL = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user/findByName";
+    private static final String IP = StringUtils.IPString;
+    //    private static final String URL = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user/findByName";
+    private static final String URL = "http://" + IP + "/SportServer/webresources/com.dy.entity.user/findByName";
+
     JsonUser user = null;
-    private static final String UPDATEUSER = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user";
+    private static final String UPDATEUSER = "http://" + IP + "/SportServer/webresources/com.dy.entity.user";
+
+//    private static final String UPDATEUSER = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user";
 
     private TextView curNameTextView;
     private FragmentManager fragmentManager = null;
@@ -57,10 +61,8 @@ public class ContentActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header=navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
 /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
-
-
 
 
         Intent i = getIntent();
@@ -79,15 +81,16 @@ public class ContentActivity extends AppCompatActivity
 //                System.out.println("reslut"+result);
                 Gson gson = new Gson();
                 //Json object array [{..},{}]
-                List<JsonUser> list= gson.fromJson(result.toString(), new TypeToken<List<JsonUser>>(){}.getType());
+                List<JsonUser> list = gson.fromJson(result.toString(), new TypeToken<List<JsonUser>>() {
+                }.getType());
                 user = list.get(0);
 //                System.out.println("fromJson->"+user);
                 dbHelper.findAllUser();
                 System.out.println("insert before===================");
                 dbHelper = new DatabaseHelper(getApplicationContext());
-                if(dbHelper.checkUser(curUserName)){
+                if (dbHelper.checkUser(curUserName)) {
                     System.out.println("exsist");
-                }else{
+                } else {
                     System.out.println("add User");
                     User tmp = new User();
                     tmp.setId(user.getId());
@@ -159,20 +162,20 @@ public class ContentActivity extends AppCompatActivity
         Fragment nextFragment = null;
 
 
-
-
         if (id == R.id.nav_calorie_goal) {
             nextFragment = new CalorieGoalFragment();
         } else if (id == R.id.nav_progress_report) {
+
 
         } else if (id == R.id.nav_steps) {
             nextFragment = new StepFragment();
 
         } else if (id == R.id.nav_track_calorie) {
 
-        }else if(id == R.id.nav_map){
+        } else if (id == R.id.nav_map) {
 
-        }else if(id == R.id.nav_diet){
+        } else if (id == R.id.nav_diet) {
+            nextFragment = new DietFragment1();
 
         }
 

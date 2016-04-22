@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
     private  static final String IP = StringUtils.IPString;
     //    private  static final String IP = "172.16.153.14";
-    private static final String URL = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user/checkUser";
+
+    private static final String URL = "http://"+IP+"/SportServer/webresources/com.dy.entity.user/checkUser";
+
+//    private static final String URL = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user/checkUser";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void signUp(View view) {
-        Intent i = new Intent(MainActivity.this, RegisterActivity.class);
+//        Intent i = new Intent(MainActivity.this, RegisterActivity.class);
+        Intent i = new Intent(MainActivity.this, MapsActivity.class);
+
         startActivity(i);
     }
 

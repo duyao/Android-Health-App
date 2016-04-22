@@ -39,8 +39,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final String IP = StringUtils.IPString;
     //    private  static final String IP = "172.16.153.14";
+    private static final String URL = "http://"+IP + "/SportServer/webresources/com.dy.entity.user";
 
-    private static final String URL = "http://" + IP + ":8080/SportServer/webresources/com.dy.entity.user";
+//    private static final String URL = "http://" + IP + ":8080/SportServer/webresources/com.dy.entity.user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,21 +108,21 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
 
-        if(flag){
+        if (flag) {
             Gson gson = new Gson();
-            final JsonUser user = new JsonUser(name,passwd,Integer.valueOf(age),gender.charAt(0),
-                    Double.valueOf(height), Double.valueOf(weight), Integer.valueOf(level), Integer.valueOf(step),Integer.valueOf(goal));
+            final JsonUser user = new JsonUser(name, passwd, Integer.valueOf(age), gender.charAt(0),
+                    Double.valueOf(height), Double.valueOf(weight), Integer.valueOf(level), Integer.valueOf(step), Integer.valueOf(goal));
             String s = gson.toJson(user);
-            System.out.println("generate json"+s);
+            System.out.println("generate json" + s);
             new ConnectionUtils(URL, new ConnectionUtils.ConnectionCallback() {
                 @Override
                 public void onSuccess(Object result) {
-                    if("204".equals(result.toString())){
+                    if ("204".equals(result.toString())) {
                         Toast.makeText(getApplicationContext(), "Register Successfully, then Sign In",
                                 Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(i);
-                    }else{
+                    } else {
                         onFail();
                     }
 
@@ -131,10 +132,8 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onFail() {
 
                 }
-            },s,0);
+            }, s, 0);
         }
-
-
 
 
     }

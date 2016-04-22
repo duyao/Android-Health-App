@@ -32,7 +32,9 @@ public class CalorieGoalFragment extends Fragment {
     private EditText calorieEditText;
     private Button button;
     private static final String IP = StringUtils.IPString;
-    private static final String URL = "http://" + IP + ":8080/SportServer/webresources/com.dy.entity.user/updateGoal";
+    private static final String URL = "http://" + IP + "/SportServer/webresources/com.dy.entity.user/updateGoal";
+
+//    private static final String URL = "http://" + IP + ":8080/SportServer/webresources/com.dy.entity.user/updateGoal";
     private FragmentManager manager;
     private FragmentTransaction ft;
 
