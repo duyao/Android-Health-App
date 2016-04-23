@@ -35,6 +35,7 @@ public class DietFragment1 extends Fragment {
     private FragmentTransaction ft;
     private int selectedPosition = -1;
     private String[] list;
+    private String[] listId;
     private CategoryAdapter adapter;
     private static final String IP = StringUtils.IPString;
     final static String URL = "http://" + IP + "/SportServer/webresources/com.dy.entity.food/findByServing";
@@ -52,10 +53,10 @@ public class DietFragment1 extends Fragment {
         manager = getFragmentManager();
 
         u = this.getArguments().getParcelable("user");
-        System.out.println("setp->u" + u);
+//        System.out.println("setp->u" + u);
 
         list = new String[]{"Pork Products", "Fruits and Fruit Juices", "Meals, Entrees, and Side Dishes", "Vegetables and Vegetable Products", "Soups, Sauces, and Gravies", "Breakfast Cereals"};
-
+        listId = new String[]{"1000","0900","2200","1100","0600","0800"};
         adapter = new CategoryAdapter(vDiet.getContext(), list);
         dietListView.setAdapter(adapter);
 
@@ -102,12 +103,12 @@ public class DietFragment1 extends Fragment {
                         dietFragment2.setArguments(bundle);
 
 
-//                        ft = manager.beginTransaction();
-//                        DietFragment2 fragment2 = new DietFragment2();
-//                        //the old fragment exist.
-//                        ft.add(R.id.content_frame, fragment2);
-////                ft.addToBackStack(null);
-//                        ft.commit();
+                        ft = manager.beginTransaction();
+                        DietFragment2 fragment2 = new DietFragment2();
+                        //the old fragment exist.
+                        ft.add(R.id.content_frame, fragment2);
+//                ft.addToBackStack(null);
+                        ft.commit();
 
                     }
 

@@ -11,7 +11,9 @@ import java.util.Date;
 public class StringUtils {
     //        public static final  String IPString  = "172.16.153.14";
 //    public static final String IPString = "172.16.120.97";
-    public static final String IPString = "1u4d986139.iask.in:17471";
+//    public static final String IPString = "1u4d986139.iask.in:17471";
+    public static final String IPString = "1u4d986139.iask.in:24792";
+
 
     public static String getPasswordEncryption(String inputStr) {
 //        System.out.println("=======加密前的数据:" + inputStr);
