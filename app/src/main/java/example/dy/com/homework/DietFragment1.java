@@ -75,50 +75,20 @@ public class DietFragment1 extends Fragment {
             public void onClick(View v) {
 //                System.out.println("click" + selectedPosition);
                 String s = list[selectedPosition].replace(' ','&');
-                new ConnectionUtils(URL, new ConnectionUtils.ConnectionCallback() {
-                    @Override
-                    public void onSuccess(Object result) {
-                        System.out.println("reslut" + result);
-                        Gson gson = new Gson();
-                        //Json object array [{..},{}]
-                        List<JsonFood> list = gson.fromJson(result.toString(), new TypeToken<List<JsonFood>>() {
-                        }.getType());
-                        String[] foodIds = new String[list.size()];
-                        for(int i = 0; i < list.size(); i++){
-                            System.out.println("food->"+list.get(i));
-                            foodIds[i] = list.get(i).getId();
-                        }
-                        for (String tmp :
-                                foodIds) {
-                            System.out.print(tmp+",");
-                        }
+                DietFragment2 dietFragment2 = new DietFragment2();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user", u);
+                bundle.putString("category", s);
+                System.out.println("category in 1"+s);
+                dietFragment2.setArguments(bundle);
 
 
-
-
-                        DietFragment2 dietFragment2 = new DietFragment2();
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable("user", u);
-
-                        dietFragment2.setArguments(bundle);
-
-
-                        ft = manager.beginTransaction();
-                        DietFragment2 fragment2 = new DietFragment2();
-                        //the old fragment exist.
-                        ft.add(R.id.content_frame, fragment2);
-//                ft.addToBackStack(null);
-                        ft.commit();
-
-                    }
-
-                    @Override
-                    public void onFail() {
-                        System.out.println("cannot find user in server");
-
-                    }
-                }, s);
-
+                ft = manager.beginTransaction();
+                //the old fragment exist.
+//                ft.addToBackStack()
+                ft.replace(R.id.content_frame, dietFragment2);
+                ft.addToBackStack(null);
+                ft.commit();
 
             }
         });

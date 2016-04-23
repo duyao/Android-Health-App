@@ -48,7 +48,6 @@ public class StepFragment extends Fragment {
         manager = getFragmentManager();
 
         u = this.getArguments().getParcelable("user");
-        System.out.println("setp->u"+u);
 
         String curDay = StringUtils.getCurTime().substring(0, 10);
         curDate.setText("Steps in "+ curDay);

@@ -7,23 +7,36 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.List;
+
+import example.dy.com.homework.entity.JsonFood;
 import example.dy.com.homework.entity.JsonUser;
+import example.dy.com.homework.myUtil.ConnectionUtils;
 import example.dy.com.homework.myUtil.DatabaseHelper;
+import example.dy.com.homework.myUtil.StringUtils;
 
 /**
  * Created by dy on 2016/4/22.
  */
 public class DietFragment2 extends Fragment {
     private View vDiet;
-    private ListView dietListView;
+    private ListView foodListView;
     private Button button;
     private DatabaseHelper databaseHelper;
     private JsonUser u;
     private FragmentManager manager;
     private FragmentTransaction ft;
+    private FoodAdapter adapter;
+    private int selectedPosition = -1;
+    private static final String IP = StringUtils.IPString;
+    final static String URL = "http://" + IP + "/SportServer/webresources/com.dy.entity.food/findByServing";
 
 
     @Override
@@ -36,22 +49,50 @@ public class DietFragment2 extends Fragment {
 
         vDiet = inflater.inflate(R.layout.fragment_diet2, container, false);
 
-//        dietListView = (ListView) vDiet.findViewById(R.id.category_listview);
-//        button = (Button) vDiet.findViewById(R.id.select_diet_button);
+        foodListView = (ListView) vDiet.findViewById(R.id.food_listview);
+        button = (Button) vDiet.findViewById(R.id.addnum_food_button);
 
         databaseHelper = new DatabaseHelper(vDiet.getContext());
         manager = getFragmentManager();
+        Bundle b = getArguments();
+        String category = "";
+        if(b!=null){
+            u = this.getArguments().getParcelable("user");
+            category = this.getArguments().getString("category");
+        }
 
-        u = this.getArguments().getParcelable("user");
-        System.out.println("diet2->u" + u);
+        new ConnectionUtils(URL, new ConnectionUtils.ConnectionCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                System.out.println("reslut" + result);
+                Gson gson = new Gson();
+                //Json object array [{..},{}]
+                List<JsonFood> list = gson.fromJson(result.toString(), new TypeToken<List<JsonFood>>() {
+                }.getType());
+
+                adapter = new FoodAdapter(vDiet.getContext(), list);
+                foodListView.setAdapter(adapter);
+
+                foodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        adapter.select(position);
+                        selectedPosition = position;
+
+                    }
+                });
 
 
+            }
 
-//        String[] list = {"Pork Products", "Fruits and Fruit Juices", "Meals, Entrees, and Side Dishes", "Vegetables and Vegetable Products", "Soups, Sauces, and Gravies", "Breakfast Cereals"};
-//        final CategoryAdapter adapter = new CategoryAdapter(vDiet.getContext(),list);
-//        dietListView.setAdapter(adapter);
-//
-//
+            @Override
+            public void onFail() {
+                System.out.println("cannot find user in server");
+
+            }
+        }, category);
+
+
 //        //after submitting return this view
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
