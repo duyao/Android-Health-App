@@ -1,32 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="2/2 Select the food item"
-            android:layout_gravity="center_horizontal"
-            android:textSize="30dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="2/2 Add the food item"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp" />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:id="@+id/food_listview"
-            android:layout_weight="1.28"
-            android:layout_marginTop="10dp"/>
+    <ListView
+        android:id="@+id/food_listview"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1.28" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <Button
+            android:id="@+id/detail_food_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="more details" />
+
+        <Button
             android:id="@+id/addnum_food_button"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
             android:text="add food item" />
+
+
     </LinearLayout>
 
+
 </LinearLayout>
+

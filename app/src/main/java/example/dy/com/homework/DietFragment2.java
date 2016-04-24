@@ -1,15 +1,21 @@
 package example.dy.com.homework;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,7 +23,10 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import example.dy.com.homework.entity.JsonFood;
+import example.dy.com.homework.entity.JsonIntake;
 import example.dy.com.homework.entity.JsonUser;
+import example.dy.com.homework.entity.ONutrient;
+import example.dy.com.homework.entity.OReslut;
 import example.dy.com.homework.myUtil.ConnectionUtils;
 import example.dy.com.homework.myUtil.DatabaseHelper;
 import example.dy.com.homework.myUtil.StringUtils;
@@ -28,16 +37,18 @@ import example.dy.com.homework.myUtil.StringUtils;
 public class DietFragment2 extends Fragment {
     private View vDiet;
     private ListView foodListView;
-    private Button button;
+    private Button addButton;
+    private Button detailButton;
     private DatabaseHelper databaseHelper;
     private JsonUser u;
     private FragmentManager manager;
     private FragmentTransaction ft;
     private FoodAdapter adapter;
     private int selectedPosition = -1;
+    List<JsonFood> list;
     private static final String IP = StringUtils.IPString;
     final static String URL = "http://" + IP + "/SportServer/webresources/com.dy.entity.food/findByServing";
-
+    final static String ADDURL = "http://" + IP + "/SportServer/webresources/com.dy.entity.intake";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,13 +61,13 @@ public class DietFragment2 extends Fragment {
         vDiet = inflater.inflate(R.layout.fragment_diet2, container, false);
 
         foodListView = (ListView) vDiet.findViewById(R.id.food_listview);
-        button = (Button) vDiet.findViewById(R.id.addnum_food_button);
-
+        addButton = (Button) vDiet.findViewById(R.id.addnum_food_button);
+        detailButton = (Button) vDiet.findViewById(R.id.detail_food_button);
         databaseHelper = new DatabaseHelper(vDiet.getContext());
         manager = getFragmentManager();
         Bundle b = getArguments();
         String category = "";
-        if(b!=null){
+        if (b != null) {
             u = this.getArguments().getParcelable("user");
             category = this.getArguments().getString("category");
         }
@@ -67,7 +78,8 @@ public class DietFragment2 extends Fragment {
                 System.out.println("reslut" + result);
                 Gson gson = new Gson();
                 //Json object array [{..},{}]
-                List<JsonFood> list = gson.fromJson(result.toString(), new TypeToken<List<JsonFood>>() {
+
+                list = gson.fromJson(result.toString(), new TypeToken<List<JsonFood>>() {
                 }.getType());
 
                 adapter = new FoodAdapter(vDiet.getContext(), list);
@@ -82,37 +94,130 @@ public class DietFragment2 extends Fragment {
                     }
                 });
 
-
             }
 
             @Override
             public void onFail() {
-                System.out.println("cannot find user in server");
+                System.out.println("cannot find food in server");
 
             }
         }, category);
 
 
 //        //after submitting return this view
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                System.out.println("click");
-//                System.out.println("llalal->get->"+adapter.getIndex()+",get item->"+adapter.getItem(adapter.getIndex()));
-////                StepFragment stepFragment = new StepFragment();
-////                Bundle bundle = new Bundle();
-////                bundle.putParcelable("user", u);
-////                stepFragment.setArguments(bundle);
-////
-////                ft = manager.beginTransaction();
-////                ft.replace(R.id.content_frame, stepFragment);
-////                ft.addToBackStack(null);
-////
-////                ft.commit();
-//
-//
-//            }
-//        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final EditText editText = new EditText(vDiet.getContext());
+                editText.setEms(3);
+                editText.setWidth(5);
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                AlertDialog.Builder builder = new AlertDialog.Builder(vDiet.getContext());
+                builder.setTitle("Input the quantity of food");
+                builder.setView(editText);
+                builder.setPositiveButton("finish",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Double quantity = Double.valueOf(editText.getText().toString().trim());
+                                System.out.println("num" + quantity);
+                                System.out.println("selelted item->" + list.get(selectedPosition));
+
+                                //add into database, post
+                                Gson gson = new Gson();
+                                final JsonIntake intake = new JsonIntake(list.get(selectedPosition), quantity, u);
+                                String s = gson.toJson(intake);
+                                System.out.println("generate json" + s);
+                                new ConnectionUtils(ADDURL, new ConnectionUtils.ConnectionCallback() {
+                                    @Override
+                                    public void onSuccess(Object result) {
+                                        if ("204".equals(result.toString())) {
+                                            MainFragment mainFragment = new MainFragment();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putParcelable("user", u);
+                                            mainFragment.setArguments(bundle);
+
+                                            ft = manager.beginTransaction();
+                                            ft.replace(R.id.content_frame, mainFragment);
+                                            ft.addToBackStack(null);
+
+                                            ft.commit();
+
+                                        } else {
+                                            onFail();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFail() {
+
+                                    }
+                                }, s, 0);
+
+
+                            }
+                        });
+                builder.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+//                                System.out.println("NOOOOOOOOOOO");
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+
+
+            }
+        });
+
+
+        detailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = "http://api.nal.usda.gov/ndb/reports/?ndbno=" + list.get(selectedPosition).getId() +
+                        "&type=f&format=json&api_key=p5aLD8nQMekwaaiWIlAQZu3Lr9LSdL75YEMK0CIP";
+                System.out.println("Myurl->" + url);
+
+
+                new ConnectionUtils(url, new ConnectionUtils.ConnectionCallback() {
+                    @Override
+                    public void onSuccess(Object result) {
+                        System.out.println("reslut" + result);
+                        Gson gson = new Gson();
+                        //Json object array [{..},{}]
+
+                        OReslut apiResult = gson.fromJson(result.toString(), new TypeToken<OReslut>() {
+                        }.getType());
+
+                        List<ONutrient> nutrients = apiResult.getReport().getFood().getNutrients();
+                        int[] nutrientList = new int[]{268, 203, 204, 205, 269};
+                        String[] nutrientName = new String[]{"Energy", "Protein", "Total lipid (fat)", "Carbohydrate", "Sugars total"};
+                        for (ONutrient tmp : nutrients) {
+//                            System.out.println(tmp);
+                            for (int i = 0; i < nutrientList.length; i++) {
+                                if (tmp.getNutrient_id() == nutrientList[i]) {
+                                    System.out.println("get->" + tmp.getNutrient_id() + "," + tmp.getName() + "," + tmp.getValue() + "," + tmp.getUnit());
+                                }
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFail() {
+                        System.out.println("cannot find food in api");
+
+                    }
+                }, null);
+
+
+            }
+        });
 
 
         return vDiet;

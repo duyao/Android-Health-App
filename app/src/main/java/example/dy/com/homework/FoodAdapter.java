@@ -1,6 +1,8 @@
 package example.dy.com.homework;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import example.dy.com.homework.entity.JsonFood;
-import example.dy.com.homework.entity.JsonUser;
 
 /**
  * Created by dy on 2016/4/23.
@@ -27,7 +28,7 @@ public class FoodAdapter extends BaseAdapter {
     public class viewHolder {
         public TextView foodNameText;
         private TextView foodCalText;
-        private EditText numFood;
+//        private EditText numFood;
         public RadioButton selectButton;
 
     }
@@ -53,6 +54,7 @@ public class FoodAdapter extends BaseAdapter {
         for (int i = 0; i < foodItems.size(); i++) {
             isSelected.put(foodItems.get(i).getId(), false);
         }
+
     }
 
     @Override
@@ -72,8 +74,9 @@ public class FoodAdapter extends BaseAdapter {
 
     //button focusable must add !!!
     public void select(int position) {
-        if (!isSelected.get(position)) {
+        if (!isSelected.get(foodItems.get(position).getId())) {
             isSelected.put(foodItems.get(position).getId(), true);
+
             for (int i = 0; i < isSelected.size(); i++) {
                 if (i != position) {
                     isSelected.put(foodItems.get(i).getId(), false);
@@ -93,7 +96,7 @@ public class FoodAdapter extends BaseAdapter {
             holder.selectButton.setChecked(false);
             holder.foodNameText = (TextView) convertView.findViewById(R.id.name_food_text);
             holder.foodCalText =(TextView) convertView.findViewById(R.id.cal_food_text);
-            holder.numFood = (EditText) convertView.findViewById(R.id.number_food);
+//            holder.numFood = (EditText) convertView.findViewById(R.id.number_food);
             convertView.setTag(holder);
         } else {
             holder = (viewHolder) convertView.getTag();
@@ -102,7 +105,10 @@ public class FoodAdapter extends BaseAdapter {
         holder.selectButton.setChecked(isSelected.get(food.getId()));
         holder.foodNameText.setText(food.getName());
         holder.foodCalText.setText(food.getCalorie());
-        holder.numFood.setText("1");
+//        holder.numFood.setText("1");
+
+
+
         return convertView;
 
 

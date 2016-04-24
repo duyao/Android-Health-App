@@ -29,9 +29,12 @@ public class ConnectionUtils {
             protected String doInBackground(Void... param) {
                 BufferedReader reader = null;
                 StringBuffer sb = new StringBuffer();
-                for (int i = 0; i < params.length; i++) {
-                    sb.append("/").append(params[i]);
+                if(params != null){
+                    for (int i = 0; i < params.length; i++) {
+                        sb.append("/").append(params[i]);
+                    }
                 }
+
                 try {
                     String path = url + sb.toString();
                     System.out.println("path:" + path);

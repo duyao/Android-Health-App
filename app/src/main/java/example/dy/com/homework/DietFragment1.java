@@ -79,7 +79,7 @@ public class DietFragment1 extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("user", u);
                 bundle.putString("category", s);
-                System.out.println("category in 1"+s);
+//                System.out.println("category in 1"+s);
                 dietFragment2.setArguments(bundle);
 
 
