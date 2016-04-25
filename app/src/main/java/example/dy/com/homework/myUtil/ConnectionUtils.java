@@ -29,7 +29,7 @@ public class ConnectionUtils {
             protected String doInBackground(Void... param) {
                 BufferedReader reader = null;
                 StringBuffer sb = new StringBuffer();
-                if(params != null){
+                if(params != null || params.length != 0){
                     for (int i = 0; i < params.length; i++) {
                         sb.append("/").append(params[i]);
                     }

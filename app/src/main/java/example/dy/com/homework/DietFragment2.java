@@ -196,15 +196,16 @@ public class DietFragment2 extends Fragment {
                         List<ONutrient> nutrients = apiResult.getReport().getFood().getNutrients();
                         int[] nutrientList = new int[]{268, 203, 204, 205, 269};
                         String[] nutrientName = new String[]{"Energy", "Protein", "Total lipid (fat)", "Carbohydrate", "Sugars total"};
+                        Double cal = 0.0;
                         for (ONutrient tmp : nutrients) {
 //                            System.out.println(tmp);
                             for (int i = 0; i < nutrientList.length; i++) {
                                 if (tmp.getNutrient_id() == nutrientList[i]) {
                                     System.out.println("get->" + tmp.getNutrient_id() + "," + tmp.getName() + "," + tmp.getValue() + "," + tmp.getUnit());
                                 }
+
                             }
                         }
-
 
                     }
 
@@ -213,7 +214,7 @@ public class DietFragment2 extends Fragment {
                         System.out.println("cannot find food in api");
 
                     }
-                }, null);
+                }, new String[]{});
 
 
             }

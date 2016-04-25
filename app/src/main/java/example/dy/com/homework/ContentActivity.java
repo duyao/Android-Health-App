@@ -171,6 +171,7 @@ public class ContentActivity extends AppCompatActivity
             nextFragment = new StepFragment();
 
         } else if (id == R.id.nav_track_calorie) {
+            nextFragment = new CalTrackFragment();
 
         } else if (id == R.id.nav_map) {
 

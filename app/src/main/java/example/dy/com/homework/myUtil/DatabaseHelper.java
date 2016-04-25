@@ -50,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(User.COLUMN_LATITUDE, 0.0);
         values.put(User.COLUMN_LONGITUDE, 0.0);
         Long res = db.insert(User.TABLE_NAME, null, values);
-        System.out.println("add res->"+res);
+        System.out.println("add res->" + res);
         db.close();
         if(res == -1){
             return false;
@@ -143,5 +143,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return list;
     }
+
 
 }

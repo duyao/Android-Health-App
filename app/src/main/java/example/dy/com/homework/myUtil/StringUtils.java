@@ -32,7 +32,7 @@ public class StringUtils {
     }
 
     public static String getCurTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = sdf.format(new Date());
 //        System.out.println(time);
         return time;
