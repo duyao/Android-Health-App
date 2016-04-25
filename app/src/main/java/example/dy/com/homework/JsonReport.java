@@ -9,7 +9,7 @@ import example.dy.com.homework.entity.JsonUser;
  */
 public class JsonReport {
     private String id;
-    private Date time;
+    private String time;
     private double consumed;
     private double intaked;
     private double totalSteps;
@@ -21,7 +21,7 @@ public class JsonReport {
         return id;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 

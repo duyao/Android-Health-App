@@ -39,9 +39,16 @@ public class StringUtils {
 
     public static double timeToNumber(String time) {
         String myTime = time.substring(10, time.length());
-        String[] ss = myTime.split(":");
+        String[] ss = myTime.split("-");
         double res = Double.valueOf(ss[0]) + Double.valueOf(ss[1]) / 100 / 60 + Double.valueOf(ss[2]) / 100 / 3600;
         return res;
 
+    }
+
+    public static double dayToNumber(String time) {
+        String myTime = time.substring(0, 10);
+        String[] ss = myTime.split("-");
+        double res = Double.valueOf(ss[0])*365 + Double.valueOf(ss[1])*30 + Double.valueOf(ss[2]);
+        return res;
     }
 }
