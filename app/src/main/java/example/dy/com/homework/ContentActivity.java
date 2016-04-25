@@ -165,7 +165,7 @@ public class ContentActivity extends AppCompatActivity
         if (id == R.id.nav_calorie_goal) {
             nextFragment = new CalorieGoalFragment();
         } else if (id == R.id.nav_progress_report) {
-
+            nextFragment = new ReprotFragment();
 
         } else if (id == R.id.nav_steps) {
             nextFragment = new StepFragment();
@@ -182,13 +182,14 @@ public class ContentActivity extends AppCompatActivity
 
         //get Usr by name
         final Fragment finalNextFragment = nextFragment;
-        System.out.println("fff->"+finalNextFragment.getId());
+        System.out.println("fff->" + finalNextFragment.getId());
         new ConnectionUtils(UPDATEUSER, new ConnectionUtils.ConnectionCallback() {
             @Override
             public void onSuccess(Object result) {
 //                System.out.println("reslut"+result);
                 Gson gson = new Gson();
-                JsonUser newUser= gson.fromJson(result.toString(), new TypeToken<JsonUser>(){}.getType());
+                JsonUser newUser = gson.fromJson(result.toString(), new TypeToken<JsonUser>() {
+                }.getType());
 //                System.out.println("fromJson->" + newUser);
 
                 Bundle bundle = new Bundle();

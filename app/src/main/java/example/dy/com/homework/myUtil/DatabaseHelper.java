@@ -63,9 +63,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + User.TABLE_NAME +
                 " WHERE " + User.COLUMN_NAME + " = " + "'" + name + "'", null);
+
         if (cursor.moveToFirst()) {
+            db.close();
             return true;
         } else {
+            db.close();
             return false;
         }
     }
@@ -86,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (User u : list) {
             System.out.println(u);
         }
+        db.close();
         return list;
     }
 
@@ -108,6 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (Step step:list) {
             System.out.println(step);
         }
+        db.close();
         return list;
     }
 
@@ -126,6 +131,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void addData(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        for(int i = 3; i < 10; i++){
+            ContentValues values = new ContentValues();
+            int tstep = (int)(Math.random()*100);
+            String time = "2016-04-25 0"+String.valueOf(i)+":30:48";
+            values.put(Step.COLUMN_USERID, id);
+            values.put(Step.COLUMN_STEPS, tstep);
+            values.put(Step.COLUMN_DATE, time);
+            long res = db.insert(Step.TABLE_NAME, null, values);
+
+        }
+        for(int i = 10; i < 23; i++){
+            ContentValues values = new ContentValues();
+            int tstep = (int)(Math.random()*100);
+            String time = "2016-04-25 "+String.valueOf(i)+":30:48";
+            values.put(Step.COLUMN_USERID, id);
+            values.put(Step.COLUMN_STEPS, tstep);
+            values.put(Step.COLUMN_DATE, time);
+            long res = db.insert(Step.TABLE_NAME, null, values);
+
+        }
+        db.close();
+        System.out.println("add finish");
+    }
+
     public List<Step> findAllStep() {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Step> list = new ArrayList<>();
@@ -141,6 +172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for (Step u : list) {
             System.out.println(u);
         }
+        db.close();
         return list;
     }
 

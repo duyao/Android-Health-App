@@ -15,7 +15,6 @@ public class StringUtils {
     public static final String IPString = "1u4d986139.iask.in:15758";
 
 
-
     public static String getPasswordEncryption(String inputStr) {
 //        System.out.println("=======加密前的数据:" + inputStr);
         BigInteger bigInteger = null;
@@ -36,5 +35,13 @@ public class StringUtils {
         String time = sdf.format(new Date());
 //        System.out.println(time);
         return time;
+    }
+
+    public static double timeToNumber(String time) {
+        String myTime = time.substring(10, time.length());
+        String[] ss = myTime.split(":");
+        double res = Double.valueOf(ss[0]) + Double.valueOf(ss[1]) / 100 / 60 + Double.valueOf(ss[2]) / 100 / 3600;
+        return res;
+
     }
 }

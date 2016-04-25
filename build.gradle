@@ -16,6 +16,12 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+
+        //add achartengine
+        maven {
+            url "https://repository-achartengine.forge.cloudbees.com/snapshot/"
+        }
+
     }
 }
 

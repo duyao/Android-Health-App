@@ -36,8 +36,6 @@ public class CalTrackFragment extends Fragment {
     private View vCal;
     private DatabaseHelper databaseHelper;
     private JsonUser u;
-    private FragmentManager manager;
-    private FragmentTransaction ft;
     private static final String IP = StringUtils.IPString;
     final static String UPDATESTEPURL = "http://" + IP + "/SportServer/webresources/com.dy.entity.consume/undateSteps";
     final static String CONSUMEDBURNEDURL = "http://" + IP + "/SportServer/webresources/com.dy.entity.report/getConsumedBurnedCal";
@@ -115,7 +113,6 @@ public class CalTrackFragment extends Fragment {
         //2.
 
 
-        manager = getFragmentManager();
 
 //        System.out.println("setp->u" + u);
 
