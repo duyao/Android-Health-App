@@ -52,7 +52,7 @@ public class ReprotFragment extends Fragment {
     private static final String IP = StringUtils.IPString;
     final static String UPDATESTEPURL = "http://" + IP + "/SportServer/webresources/com.dy.entity.consume/undateSteps";
     final static String CONSUMEDBURNEDURL = "http://" + IP + "/SportServer/webresources/com.dy.entity.report/getConsumedBurnedCal";
-
+    final static String UPDATEREPORTURL = "http://" + IP + "/SportServer/webresources/com.dy.entity.report/undateReport";
 
     @Nullable
     @Override
@@ -217,20 +217,18 @@ public class ReprotFragment extends Fragment {
 
 
 //                            //generate report
-//                            System.out.println("consumeCal" + consumeCal + "burnCal" + burnCal + "remaining" + remaining + finalTotalSteps + u.getGoal());
+                            System.out.println("consumeCal" + consumeCal + "burnCal" + burnCal + "remaining" + remaining + finalTotalSteps + u.getGoal());
 //                            //add steps to server
-//                            new ConnectionUtils(, new ConnectionUtils.ConnectionCallback() {
-//                                @Override
-//                                public void onSuccess(Object result) {
-//                                    System.out.println("reslut" + result);
-//                                }
-//
-//                                @Override
-//                                public void onFail() {
-//                                    System.out.println("cannot update report in consume of server");
-//
-//                                }
-//                            }, u.getId(), String.valueOf(finalTotalSteps));
+                            new ConnectionUtils(UPDATEREPORTURL, new ConnectionUtils.ConnectionCallback() {
+                                @Override
+                                public void onSuccess(Object result) {
+                                    System.out.println("reslut" + result);
+                                }
+                                @Override
+                                public void onFail() {
+                                    System.out.println("cannot update report in consume of server");
+                                }
+                            }, u.getId());
 
 
                         }
