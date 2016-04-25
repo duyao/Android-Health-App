@@ -1,6 +1,9 @@
 package example.dy.com.homework;
 
+import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -8,6 +11,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 
 import org.achartengine.ChartFactory;
@@ -23,6 +28,7 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import example.dy.com.homework.entity.JsonUser;
@@ -48,6 +54,10 @@ public class ReprotFragment extends Fragment {
     private LinearLayout stepChart;
     private DatabaseHelper databaseHelper;
     private JsonUser u;
+    private Button dayButton;
+    private Button durationButton;
+    private FragmentManager manager;
+    private FragmentTransaction ft;
 
     private static final String IP = StringUtils.IPString;
     final static String UPDATESTEPURL = "http://" + IP + "/SportServer/webresources/com.dy.entity.consume/undateSteps";
@@ -59,11 +69,16 @@ public class ReprotFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vReport = inflater.inflate(R.layout.fragment_report, container, false);
 
-
+        dayButton = (Button) vReport.findViewById(R.id.specific_button);
+        durationButton = (Button) vReport.findViewById(R.id.durationButton);
         cbchart = (LinearLayout) vReport.findViewById(R.id.cbchart);
         grchart = (LinearLayout) vReport.findViewById(R.id.grchart);
         stepChart = (LinearLayout) vReport.findViewById(R.id.step_chart);
+
         databaseHelper = new DatabaseHelper(vReport.getContext());
+
+        manager = getFragmentManager();
+
 
         u = this.getArguments().getParcelable("user");
 
@@ -209,8 +224,7 @@ public class ReprotFragment extends Fragment {
                             renderer3.setLegendTextSize(30);
                             renderer3.setPanEnabled(false);// 上下左右都不可以移动
                             renderer3.setLabelsColor(Color.BLACK);
-                            graphicalView = ChartFactory.getPieChartView(getActivity(),
-                                    ser, renderer3);
+                            graphicalView = ChartFactory.getPieChartView(getActivity(),ser, renderer3);
 
                             // Adding the pie chart to the custom layout
                             grchart.addView(graphicalView);
@@ -224,6 +238,7 @@ public class ReprotFragment extends Fragment {
                                 public void onSuccess(Object result) {
                                     System.out.println("reslut" + result);
                                 }
+
                                 @Override
                                 public void onFail() {
                                     System.out.println("cannot update report in consume of server");
@@ -254,6 +269,56 @@ public class ReprotFragment extends Fragment {
 
             }
         }, u.getId(), String.valueOf(totalSteps));
+
+
+        dayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                new DatePickerDialog(vReport.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                String pickTime = year + "-" + (monthOfYear+1) + "-" + dayOfMonth;
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("user", u);
+                                bundle.putString("time", pickTime);
+
+                                DayReportFragment fragment = new DayReportFragment();
+                                fragment.setArguments(bundle);
+                                ft = manager.beginTransaction();
+                                ft.replace(R.id.content_frame, fragment);
+                                ft.addToBackStack(null);
+                                ft.commit();
+
+
+                            }
+                        }
+                        , c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+                        c.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+        durationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user", u);
+
+                DurationFragment1 fragment = new DurationFragment1();
+                fragment.setArguments(bundle);
+                ft = manager.beginTransaction();
+                ft.replace(R.id.content_frame, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+
+
+            }
+        });
 
 
         return vReport;

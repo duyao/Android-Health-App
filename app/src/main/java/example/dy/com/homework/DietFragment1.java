@@ -185,9 +185,9 @@ public class DietFragment1 extends Fragment {
 
                 ft = manager.beginTransaction();
                 //the old fragment exist.
-//                ft.addToBackStack()
+//                ft.addToBackStack();
                 ft.replace(R.id.content_frame, dietFragment2);
-                ft.addToBackStack(null);
+//                ft.addToBackStack(dietFragment2.getTag());
                 ft.commit();
 
             }

@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:text="A specific day"
-            android:id="@+id/select_day"
+            android:id="@+id/specific_button"
             android:layout_gravity="left"
             android:layout_marginRight="20dp"
             android:textSize="15dp" />
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:text="A duration"
-            android:id="@+id/button"
+            android:id="@+id/durationButton"
             android:layout_gravity="right"
             android:textSize="15dp"/>
 
