@@ -82,7 +82,7 @@ public class CalTrackFragment extends Fragment {
                         public void onSuccess(Object result) {
                             System.out.println("comsume->" + result);
                             String[] tmp = result.toString().split(",");
-                            consumedText.setText(tmp[0]);
+                            consumedText.setText(tmp[0].substring(0,8));
                             burnedText.setText(tmp[1]);
 
                         }
@@ -107,7 +107,7 @@ public class CalTrackFragment extends Fragment {
                 System.out.println("cannot update step in consume of server");
 
             }
-        }, u.getId(), String.valueOf(totalSteps));
+        }, u.getId(), String.valueOf(totalSteps), dateString);
 
 
         //2.

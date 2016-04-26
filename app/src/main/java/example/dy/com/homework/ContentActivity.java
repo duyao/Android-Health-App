@@ -174,6 +174,7 @@ public class ContentActivity extends AppCompatActivity
             nextFragment = new CalTrackFragment();
 
         } else if (id == R.id.nav_map) {
+            nextFragment = new MapFragment();
 
         } else if (id == R.id.nav_diet) {
             nextFragment = new DietFragment1();

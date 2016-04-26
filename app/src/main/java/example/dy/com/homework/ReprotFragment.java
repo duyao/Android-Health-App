@@ -268,7 +268,7 @@ public class ReprotFragment extends Fragment {
                 System.out.println("cannot update step in consume of server");
 
             }
-        }, u.getId(), String.valueOf(totalSteps));
+        }, u.getId(), String.valueOf(totalSteps),dateString);
 
 
         dayButton.setOnClickListener(new View.OnClickListener() {

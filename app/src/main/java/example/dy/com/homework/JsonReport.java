@@ -48,4 +48,18 @@ public class JsonReport {
     public JsonUser getUserId() {
         return userId;
     }
+
+    @Override
+    public String toString() {
+        return "JsonReport{" +
+                "id='" + id + '\'' +
+                ", time='" + time + '\'' +
+                ", consumed=" + consumed +
+                ", intaked=" + intaked +
+                ", totalSteps=" + totalSteps +
+                ", calorieSetGoal=" + calorieSetGoal +
+                ", remaining=" + remaining +
+                ", userId=" + userId +
+                '}';
+    }
 }

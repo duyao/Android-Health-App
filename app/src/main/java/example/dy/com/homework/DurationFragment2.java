@@ -12,14 +12,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.games.achievement.Achievement;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
 import org.achartengine.chart.PointStyle;
+import org.achartengine.model.CategorySeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.DefaultRenderer;
+import org.achartengine.renderer.SimpleSeriesRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
@@ -27,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import example.dy.com.homework.entity.JsonUser;
-import example.dy.com.homework.entity.Step;
 import example.dy.com.homework.myUtil.ConnectionUtils;
 import example.dy.com.homework.myUtil.StringUtils;
 
@@ -42,7 +46,9 @@ public class DurationFragment2 extends Fragment {
     private String start;
     private String end;
 
-    private LinearLayout chart;
+    private LinearLayout cbchart;
+    private LinearLayout stepChart;
+    private LinearLayout goalChart;
     private TextView title;
 
     private GraphicalView graphicalView;
@@ -58,8 +64,12 @@ public class DurationFragment2 extends Fragment {
         end = this.getArguments().getString("end");
         u = this.getArguments().getParcelable("user");
 
-        chart = (LinearLayout) vDuration.findViewById(R.id.chart_duration2);
+        cbchart = (LinearLayout) vDuration.findViewById(R.id.chart_duration2);
+        stepChart = (LinearLayout) vDuration.findViewById(R.id.step_chart_duration2);
+        goalChart = (LinearLayout) vDuration.findViewById(R.id.goal_chart_duration2);
         title = (TextView) vDuration.findViewById(R.id.time_duration2);
+
+        title.setText("Reports from " + start + " to " + end);
 
         new ConnectionUtils(URL, new ConnectionUtils.ConnectionCallback() {
             @Override
@@ -87,13 +97,14 @@ public class DurationFragment2 extends Fragment {
                     for (int i = 0; i < list.size(); i++) {
                         JsonReport r = list.get(i);
                         if (i != 0) {
-                            timeX[i] = StringUtils.dayToNumber(r.getTime()) - StringUtils.dayToNumber(list.get(i - 1).getTime());
+                            timeX[i] = StringUtils.dayToNumber(r.getTime()) - StringUtils.dayToNumber(list.get(0).getTime());
                         } else {
                             timeX[i] = 0;
                         }
                         con[i] = r.getConsumed();
                         burn[i] = r.getIntaked();
                         step[i] = r.getTotalSteps();
+                        System.out.println("timex->" + timeX[i] + "con->" + con[i] + ",burn->" + burn[i] + "step->" + step[i]);
                         if (r.getRemaining() >= r.getCalorieSetGoal()) {
                             goalCnt++;
                         }
@@ -115,7 +126,7 @@ public class DurationFragment2 extends Fragment {
 //        renderer1.setZoomLimits(new double[]{-10, 20, -10, 40});//设置放大缩小时X轴Y轴允许的最大最小值.
                     renderer1.setPanEnabled(false, false);// 上下左右都不可以移动
                     renderer1.setXTitle("Time");
-                    renderer1.setYTitle("Steps");
+                    renderer1.setYTitle("Calories");
 //        renderer1.setFitLegend(true);
                     renderer1.setLegendTextSize(40);
                     renderer1.setLabelsTextSize(40);
@@ -129,12 +140,14 @@ public class DurationFragment2 extends Fragment {
                     renderer1.setApplyBackgroundColor(true);
                     renderer1.setBackgroundColor(Color.WHITE);
                     renderer1.setMarginsColor(Color.WHITE);
+                    renderer1.setFitLegend(true);
+                    renderer1.setXTitle("Consumed and Burned Calories");
                     //top, left, bottom, right
-                    renderer1.setMargins(new int[]{0, 30, 5, 10});
+                    renderer1.setMargins(new int[]{20, 130, 25, 10});
                     renderer1.setPanLimits(new double[]{-10, 20, -10, 40}); //设置拖动时X轴Y轴允许的最大值最小值.
                     renderer1.setZoomLimits(new double[]{-10, 20, -10, 40});//设置放大缩小时X轴Y轴允许的最大最小值.
 
-                    int[] colors1 = new int[]{Color.RED, Color.GREEN};//每个序列的颜色设置
+                    int[] colors1 = new int[]{Color.RED, Color.MAGENTA};//每个序列的颜色设置
                     PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.TRIANGLE};//每个序列中点的形状设置
                     String[] titles = new String[]{"Consumed", "Burned"};
                     for (int i = 0; i < colors1.length; i++) {
@@ -142,7 +155,7 @@ public class DurationFragment2 extends Fragment {
                         r.setColor(colors1[i]);
                         r.setPointStyle(styles[i]);
                         r.setFillPoints(true);
-                        renderer1.addSeriesRenderer(i,r);
+                        renderer1.addSeriesRenderer(i, r);
                     }
 
                     XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -150,13 +163,89 @@ public class DurationFragment2 extends Fragment {
                     for (int i = 0; i < titles.length; i++) {
                         XYSeries s = new XYSeries(titles[i]);
                         for (int j = 0; j < values.get(i).length; j++) {
-                            s.add(timeX[i], values.get(i)[j]);
+                            s.add(timeX[j], values.get(i)[j]);
                         }
-                        xySeries.add(i,s);
+                        xySeries.add(i, s);
                     }
                     dataset.addAllSeries(xySeries);
                     graphicalView = ChartFactory.getLineChartView(getActivity(), dataset, renderer1);
-                    chart.addView(graphicalView);
+                    cbchart.addView(graphicalView);
+
+
+                    //step
+                    XYMultipleSeriesRenderer rendererStep = new XYMultipleSeriesRenderer();
+                    rendererStep.setXLabels(10);//设置x轴显示24个点,根据setChartSettings的最大值和最小值自动计算点的间隔
+                    rendererStep.setYLabels(10);//设置y轴显示10个点,根据setChartSettings的最大值和最小值自动计算点的间隔
+                    rendererStep.setShowGrid(true);//是否显示网格
+                    rendererStep.setXLabelsAlign(Paint.Align.RIGHT);//刻度线与刻度标注之间的相对位置关系
+                    rendererStep.setYLabelsAlign(Paint.Align.CENTER);//刻度线与刻度标注之间的相对位置关系
+                    rendererStep.setPanEnabled(false, false);// 上下左右都不可以移动
+                    rendererStep.setXTitle("Time");
+                    rendererStep.setYTitle("Steps");
+                    rendererStep.setLegendTextSize(40);
+                    rendererStep.setLabelsTextSize(40);
+                    rendererStep.setPointSize(10);
+                    rendererStep.setAxisTitleTextSize(50);
+                    rendererStep.setChartTitleTextSize(60);
+                    rendererStep.setXLabelsColor(Color.BLACK);
+                    rendererStep.setYLabelsColor(0, Color.BLACK);
+                    rendererStep.setXAxisColor(Color.BLACK);
+                    rendererStep.setYAxisColor(Color.BLACK);
+                    rendererStep.setApplyBackgroundColor(true);
+                    rendererStep.setBackgroundColor(Color.WHITE);
+                    rendererStep.setMarginsColor(Color.WHITE);
+                    rendererStep.setXTitle("Step Graph");
+                    //top, left, bottom, right
+                    rendererStep.setMargins(new int[]{10, 140, 5, 10});
+                    rendererStep.setPanEnabled(false, false);
+                    rendererStep.setBarSpacing(10);
+                    rendererStep.setDisplayValues(true);
+
+//                    rendererStep.setBarWidth(2);
+
+                    XYSeriesRenderer r = new XYSeriesRenderer();
+                    r.setColor(Color.BLUE);
+                    rendererStep.addSeriesRenderer(r);
+
+                    XYMultipleSeriesDataset dataset1 = new XYMultipleSeriesDataset();
+                    XYSeries xySeries1 = new XYSeries("Step");
+                    for (int i = 0; i < timeX.length; i++) {
+                        xySeries1.add(timeX[i], step[i]);
+                    }
+                    dataset1.addSeries(xySeries1);
+                    graphicalView = ChartFactory.getBarChartView(getActivity(), dataset1, rendererStep, BarChart.Type.DEFAULT);
+                    stepChart.addView(graphicalView);
+
+
+                    //2. burn & comsume -> data from server, draw pie
+                    double[] Performance = {goalCnt, totalCnt - goalCnt};  // [0] for correct ans, [1] for wrong ans
+                    CategorySeries series = new CategorySeries("pie"); // adding series of charts from array .
+                    series.add("Achieve", Performance[0]);
+                    series.add("Not Achieve", Performance[1]);
+                    int[] colors2 = new int[]{Color.YELLOW, Color.CYAN};            // set style for chart series
+                    DefaultRenderer renderer2 = new DefaultRenderer();
+                    for (int color : colors2) {
+                        SimpleSeriesRenderer rr = new SimpleSeriesRenderer();
+                        rr.setColor(color);
+                        renderer2.addSeriesRenderer(rr);
+                    }
+                    renderer2.isInScroll();
+                    renderer2.setZoomButtonsVisible(false);   //setting zoom button of Graph
+                    renderer2.setApplyBackgroundColor(true);
+                    renderer2.setBackgroundColor(Color.WHITE); //setting background color of chart
+                    renderer2.setChartTitle("Days of Achieve Goal");   //setting title of chart
+                    renderer2.setChartTitleTextSize(30);
+                    renderer2.setShowLabels(true);
+                    renderer2.setLabelsTextSize(30);
+                    renderer2.setLegendTextSize(30);
+                    renderer2.setPanEnabled(false);// 上下左右都不可以移动
+                    renderer2.setLabelsColor(Color.BLACK);
+                    renderer2.setDisplayValues(true);
+                    graphicalView = ChartFactory.getPieChartView(getActivity(),
+                            series, renderer2);
+
+                    // Adding the pie chart to the custom layout
+                    goalChart.addView(graphicalView);
 
 
                 }

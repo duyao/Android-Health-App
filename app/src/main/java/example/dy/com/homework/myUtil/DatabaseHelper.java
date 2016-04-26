@@ -136,23 +136,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for(int i = 3; i < 10; i++){
             ContentValues values = new ContentValues();
             int tstep = (int)(Math.random()*100);
-            String time = "2016-04-25 0"+String.valueOf(i)+":30:48";
+            String time = "2016-04-26 0"+String.valueOf(i)+":30:48";
             values.put(Step.COLUMN_USERID, id);
             values.put(Step.COLUMN_STEPS, tstep);
             values.put(Step.COLUMN_DATE, time);
             long res = db.insert(Step.TABLE_NAME, null, values);
 
         }
-        for(int i = 10; i < 23; i++){
-            ContentValues values = new ContentValues();
-            int tstep = (int)(Math.random()*100);
-            String time = "2016-04-25 "+String.valueOf(i)+":30:48";
-            values.put(Step.COLUMN_USERID, id);
-            values.put(Step.COLUMN_STEPS, tstep);
-            values.put(Step.COLUMN_DATE, time);
-            long res = db.insert(Step.TABLE_NAME, null, values);
-
-        }
+//        for(int i = 10; i < 23; i++){
+//            ContentValues values = new ContentValues();
+//            int tstep = (int)(Math.random()*100);
+//            String time = "2016-04-25 "+String.valueOf(i)+":30:48";
+//            values.put(Step.COLUMN_USERID, id);
+//            values.put(Step.COLUMN_STEPS, tstep);
+//            values.put(Step.COLUMN_DATE, time);
+//            long res = db.insert(Step.TABLE_NAME, null, values);
+//
+//        }
         db.close();
         System.out.println("add finish");
     }
