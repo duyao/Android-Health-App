@@ -1,9 +1,11 @@
 package example.dy.com.homework;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.style.ImageSpan;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         nameText = (EditText)findViewById(R.id.name);
         passwordText = (EditText)findViewById(R.id.password);
+
 
 
 
@@ -95,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void signUp(View view) {
-//        Intent i = new Intent(MainActivity.this, RegisterActivity.class);
-        Intent i = new Intent(MainActivity.this, MapsActivity.class);
+        Intent i = new Intent(MainActivity.this, RegisterActivity.class);
+//        Intent i = new Intent(MainActivity.this, MapsActivity.class);
 
         startActivity(i);
     }

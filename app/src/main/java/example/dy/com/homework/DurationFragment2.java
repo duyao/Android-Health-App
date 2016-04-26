@@ -116,7 +116,7 @@ public class DurationFragment2 extends Fragment {
 
 
                     XYMultipleSeriesRenderer renderer1 = new XYMultipleSeriesRenderer();
-                    renderer1.setXLabels(12);//设置x轴显示24个点,根据setChartSettings的最大值和最小值自动计算点的间隔
+                    renderer1.setXLabels(timeX.length);//设置x轴显示24个点,根据setChartSettings的最大值和最小值自动计算点的间隔
                     renderer1.setYLabels(10);//设置y轴显示10个点,根据setChartSettings的最大值和最小值自动计算点的间隔
                     renderer1.setShowGrid(true);//是否显示网格
                     renderer1.setXLabelsAlign(Paint.Align.RIGHT);//刻度线与刻度标注之间的相对位置关系
@@ -174,7 +174,7 @@ public class DurationFragment2 extends Fragment {
 
                     //step
                     XYMultipleSeriesRenderer rendererStep = new XYMultipleSeriesRenderer();
-                    rendererStep.setXLabels(10);//设置x轴显示24个点,根据setChartSettings的最大值和最小值自动计算点的间隔
+                    rendererStep.setXLabels(timeX.length);//设置x轴显示24个点,根据setChartSettings的最大值和最小值自动计算点的间隔
                     rendererStep.setYLabels(10);//设置y轴显示10个点,根据setChartSettings的最大值和最小值自动计算点的间隔
                     rendererStep.setShowGrid(true);//是否显示网格
                     rendererStep.setXLabelsAlign(Paint.Align.RIGHT);//刻度线与刻度标注之间的相对位置关系
@@ -198,7 +198,7 @@ public class DurationFragment2 extends Fragment {
                     //top, left, bottom, right
                     rendererStep.setMargins(new int[]{10, 140, 5, 10});
                     rendererStep.setPanEnabled(false, false);
-                    rendererStep.setBarSpacing(10);
+                    rendererStep.setBarSpacing(5);
                     rendererStep.setDisplayValues(true);
 
 //                    rendererStep.setBarWidth(2);
@@ -241,6 +241,7 @@ public class DurationFragment2 extends Fragment {
                     renderer2.setPanEnabled(false);// 上下左右都不可以移动
                     renderer2.setLabelsColor(Color.BLACK);
                     renderer2.setDisplayValues(true);
+                    renderer2.setShowLegend(false);
                     graphicalView = ChartFactory.getPieChartView(getActivity(),
                             series, renderer2);
 
