@@ -11,25 +11,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_insert_drive_file_black_24dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         />
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/nutrient_name"
         android:layout_marginStart="32dp"
         android:textSize="20sp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        android:gravity="left"/>
 
 
 
@@ -39,10 +40,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/nutrient_value"
         android:textSize="20sp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Large Text"/>
+        android:text="Large Text"
+        android:gravity="right"/>
 
 </LinearLayout>

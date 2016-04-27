@@ -6,30 +6,29 @@ import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.net.Uri;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 import example.dy.com.homework.entity.JsonUser;
-import example.dy.com.homework.entity.ONutrient;
-import example.dy.com.homework.entity.Step;
 import example.dy.com.homework.myUtil.ConnectionUtils;
-import example.dy.com.homework.myUtil.DatabaseHelper;
+import example.dy.com.homework.myUtil.ImageDownloader;
+import example.dy.com.homework.myUtil.StringUtils;
 
 /**
  * Created by dy on 2016/4/26.
@@ -37,15 +36,15 @@ import example.dy.com.homework.myUtil.DatabaseHelper;
 public class DietFragment3 extends Fragment {
 
     private ListView nListView;
-    private TextView foodName;
-    private TextView foodGroup;
-    private ImageView iamge;
+    private TextView nameView;
+    private TextView groupView;
+    private ImageView image;
+    private ProgressBar progressBar;
     private JsonUser u;
     private FragmentManager manager;
     private FragmentTransaction ft;
     private View vDiet;
     private String keyword;
-    private final String URL = "https://www.googleapis.com/customsearch/v1?q=" + keyword + "&cx=014672565480653443522:pzdmuyfup4e&fileType=jpg&imgSize=medium&imgType=photo&safe=medium&searchType=image&key=AIzaSyCww4RAetD_OrkuKw72Zwc_bqozSVdOyns";
 
     @Nullable
     @Override
@@ -54,9 +53,10 @@ public class DietFragment3 extends Fragment {
 
 
         nListView = (ListView) vDiet.findViewById(R.id.nutrient_list);
-        foodName = (TextView) vDiet.findViewById(R.id.food_name);
-        foodGroup = (TextView) vDiet.findViewById(R.id.food_category);
-        iamge = (ImageView) vDiet.findViewById(R.id.food_image);
+        nameView = (TextView) vDiet.findViewById(R.id.food_name);
+        groupView = (TextView) vDiet.findViewById(R.id.food_category);
+        image = (ImageView) vDiet.findViewById(R.id.food_image);
+        progressBar = (ProgressBar) vDiet.findViewById(R.id.progressbar);
 
 
         JsonUser u = getArguments().getParcelable("user");
@@ -72,37 +72,41 @@ public class DietFragment3 extends Fragment {
             System.out.println("Nutrient->name=" + nName.get(i) + ",value=" + nValue.get(i));
         }
 
+        nameView.setText("Food Name : "+foodName);
+        groupView.setText("Category : " + foodCategory);
         NutrientAdapter nutrientAdapter = new NutrientAdapter(vDiet.getContext(), nName, nValue);
         nListView.setAdapter(nutrientAdapter);
 
 
-        keyword = "soup";
+        int i1 = foodName.indexOf(",");
+        int i2 = foodName.indexOf(" ");
+        int len = i1 < i2 ? i1 : i2;
+        keyword = foodName.substring(0, i2);
+        System.out.println("keyword->" + keyword);
         //get consume and burned
-        new ConnectionUtils(URL, new ConnectionUtils.ConnectionCallback() {
+        new ConnectionUtils(StringUtils.getImageURL(keyword), new ConnectionUtils.ConnectionCallback() {
             @Override
             public void onSuccess(Object result) {
-                System.out.println("comsume->" + result);
 
+                String imagrLink = null;
                 try {
                     JSONObject jsonObj = new JSONObject(result.toString());
                     JSONArray jsonArray = jsonObj.getJSONArray("items");
                     JSONObject item = (JSONObject) jsonArray.get(0);
-                    String imagrLink = item.getString("link");
-                    System.out.println("link->" + imagrLink);
+                    imagrLink = item.getString("link");
+
+                    new ImageDownloader(image,progressBar).execute(imagrLink);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
 
-//                java.net.URL url = new URL("http://image10.bizrate-images.com/resize?sq=60&uid=2216744464");
-//                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//                imageView.setImageBitmap(bmp);
-
             }
 
             @Override
             public void onFail() {
-                System.out.println("cannot find consume and burn of server");
+                System.out.println("cannot food link");
 
             }
         }, new String[]{});

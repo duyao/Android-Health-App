@@ -51,4 +51,9 @@ public class StringUtils {
         double res = Double.valueOf(ss[0])*365 + Double.valueOf(ss[1])*30 + Double.valueOf(ss[2]);
         return res;
     }
+
+    public static String getImageURL(String keyword){
+        String s = "https://www.googleapis.com/customsearch/v1?q=" + keyword + "&cx=014672565480653443522:pzdmuyfup4e&fileType=jpg&imgSize=medium&imgType=photo&safe=medium&searchType=image&key=AIzaSyCww4RAetD_OrkuKw72Zwc_bqozSVdOyns";
+        return s;
+    }
 }

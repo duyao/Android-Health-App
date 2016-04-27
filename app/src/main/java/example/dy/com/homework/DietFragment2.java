@@ -201,7 +201,7 @@ public class DietFragment2 extends Fragment {
 
                         OFood food =apiResult.getReport().getFood();
                         List<ONutrient> nutrients = food.getNutrients();
-                        int[] nutrientList = new int[]{268, 203, 204, 205, 269};
+                        int[] nutrientList = new int[]{268, 203, 204, 255, 269};
 //                        String[] nutrientName = new String[]{"Energy", "Protein", "Total lipid (fat)", "Carbohydrate", "Sugars total"};
 //                        Double cal = 0.0;
                         ArrayList<String> nName = new ArrayList<String>();
