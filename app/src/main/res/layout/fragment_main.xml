@@ -16,30 +16,34 @@
         android:textSize="40sp"/>
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         android:id="@+id/curUser_mainFrag"
         android:textSize="80sp"
-        android:layout_gravity="center_horizontal" />
+        android:text="Amy"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView13"
         android:text="Thank you for using this app to record calories."
         android:layout_gravity="bottom"
         android:textSize="30sp"
-        android:layout_marginLeft="50dp" />
+        android:layout_marginTop="40dp"
+        android:gravity="center" />
 
     <TextClock
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textClock"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="bottom|right"
         android:textSize="50dp"
         android:typeface="sans"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:gravity="right"
+        android:layout_marginTop="200dp" />
 
 
 </LinearLayout>

@@ -1,6 +1,9 @@
 package example.dy.com.homework;
 
 import android.app.Fragment;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import example.dy.com.homework.myUtil.GooglePlacesReadTask;
 
 /**
  * Created by dy on 2016/4/26.
@@ -66,28 +71,49 @@ public class MapFragment extends Fragment {
         // adding marker
         googleMap.addMarker(marker);
 
-        //add nearby park
-        MarkerOptions park1 = new MarkerOptions().position(new LatLng(31.270173, 120.741783)).title("Sports Park");
-        park1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(park1);
-        MarkerOptions park2 = new MarkerOptions().position(new LatLng(31.277297, 120.734259)).title("Renmin University of China National University Science Park");
-        park2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(park2);
-        MarkerOptions park3 = new MarkerOptions().position(new LatLng(31.276452, 120.725988)).title("Suzhou Dushuhu Higher Education Area");
-        park3.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(park3);
-        MarkerOptions park4 = new MarkerOptions().position(new LatLng(31.260925, 120.753972)).title("Sipivt");
-        park4.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(park4);
-        MarkerOptions park5 = new MarkerOptions().position(new LatLng(31.255617, 120.750759)).title("Suzhou Industrial Park Jincheng Clothing And Accessories");
-        park5.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(park5);
-        MarkerOptions park6 = new MarkerOptions().position(new LatLng(31.273581, 120.749408)).title("Layde Park");
-        park6.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(park6);
-        MarkerOptions park7 = new MarkerOptions().position(new LatLng(31.264173, 120.725798)).title("Suzhou Dushu Lake Higher Education Town Sports Development Center Gym");
-        park7.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        googleMap.addMarker(park7);
+        String APIKEY = "AIzaSyBK7tSGQnwGfHS3R8Mq525JVpokkVsinGo";
+        String type = "school";
+        String radius = "5000";
+
+                StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+                googlePlacesUrl.append("location=" + latitude + "," + longitude);
+                googlePlacesUrl.append("&radius=" + radius);
+                googlePlacesUrl.append("&types=" + type);
+                googlePlacesUrl.append("&sensor=true");
+                googlePlacesUrl.append("&key=" + APIKEY);
+
+                GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask();
+                Object[] toPass = new Object[2];
+                toPass[0] = googleMap;
+                toPass[1] = googlePlacesUrl.toString();
+                googlePlacesReadTask.execute(toPass);
+
+
+
+
+
+//        //add nearby park
+//        MarkerOptions park1 = new MarkerOptions().position(new LatLng(31.270173, 120.741783)).title("Sports Park");
+//        park1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//        googleMap.addMarker(park1);
+//        MarkerOptions park2 = new MarkerOptions().position(new LatLng(31.277297, 120.734259)).title("Renmin University of China National University Science Park");
+//        park2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//        googleMap.addMarker(park2);
+//        MarkerOptions park3 = new MarkerOptions().position(new LatLng(31.276452, 120.725988)).title("Suzhou Dushuhu Higher Education Area");
+//        park3.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//        googleMap.addMarker(park3);
+//        MarkerOptions park4 = new MarkerOptions().position(new LatLng(31.260925, 120.753972)).title("Sipivt");
+//        park4.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//        googleMap.addMarker(park4);
+//        MarkerOptions park5 = new MarkerOptions().position(new LatLng(31.255617, 120.750759)).title("Suzhou Industrial Park Jincheng Clothing And Accessories");
+//        park5.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//        googleMap.addMarker(park5);
+//        MarkerOptions park6 = new MarkerOptions().position(new LatLng(31.273581, 120.749408)).title("Layde Park");
+//        park6.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//        googleMap.addMarker(park6);
+//        MarkerOptions park7 = new MarkerOptions().position(new LatLng(31.264173, 120.725798)).title("Suzhou Dushu Lake Higher Education Town Sports Development Center Gym");
+//        park7.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//        googleMap.addMarker(park7);
 
 
 

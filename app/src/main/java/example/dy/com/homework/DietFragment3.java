@@ -52,6 +52,8 @@ public class DietFragment3 extends Fragment {
         vDiet = inflater.inflate(R.layout.fragment_diet3, container, false);
 
 
+
+
         nListView = (ListView) vDiet.findViewById(R.id.nutrient_list);
         nameView = (TextView) vDiet.findViewById(R.id.food_name);
         groupView = (TextView) vDiet.findViewById(R.id.food_category);
@@ -96,6 +98,8 @@ public class DietFragment3 extends Fragment {
                     imagrLink = item.getString("link");
 
                     new ImageDownloader(image,progressBar).execute(imagrLink);
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();

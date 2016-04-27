@@ -78,103 +78,6 @@ public class DietFragment1 extends Fragment {
 //                System.out.println("click" + selectedPosition);
                 String s = list[selectedPosition].replace(' ','&');
 
-                //update all food cal
-//                final String cateUrl = "http://" + IP + "/SportServer/webresources/com.dy.entity.food/findByServing";
-//                new ConnectionUtils(cateUrl, new ConnectionUtils.ConnectionCallback() {
-//                    @Override
-//                    public void onSuccess(Object result) {
-//                        System.out.println("all food reslut " + result);
-//                        Gson gson = new Gson();
-//                        //Json object array [{..},{}]
-//
-//                        List<JsonFood> foods = gson.fromJson(result.toString(), new TypeToken<List<JsonFood>>() {
-//                        }.getType());
-//
-////                        final JsonFood ffoodItem =  foods.get(0);
-//
-//                        for (final JsonFood ffoodItem: foods) {
-//
-//                            System.out.println("cur food->"+ffoodItem);
-//                            String url = "http://api.nal.usda.gov/ndb/reports/?ndbno=" + ffoodItem.getId() +
-//                                    "&type=f&format=json&api_key=p5aLD8nQMekwaaiWIlAQZu3Lr9LSdL75YEMK0CIP";
-//                            System.out.println("api url->" + url);
-//
-//
-//                            new ConnectionUtils(url, new ConnectionUtils.ConnectionCallback() {
-//                                @Override
-//                                public void onSuccess(Object result) {
-//                                    System.out.println("api reslut" + result);
-//                                    Gson gson = new Gson();
-//                                    //Json object array [{..},{}]
-//
-//                                    OReslut apiResult = gson.fromJson(result.toString(), new TypeToken<OReslut>() {
-//                                    }.getType());
-//
-//                                    List<ONutrient> nutrients = apiResult.getReport().getFood().getNutrients();
-//                                    int[] nutrientList = new int[]{268, 203, 204, 205, 269};
-//                                    String[] nutrientName = new String[]{"Energy", "Protein", "Total lipid (fat)", "Carbohydrate", "Sugars total"};
-//                                    String cal = "0.0";
-//                                    for (ONutrient tmp : nutrients) {
-////                            System.out.println(tmp);
-//                                        for (int i = 0; i < nutrientList.length; i++) {
-//                                            if (tmp.getNutrient_id() == nutrientList[i]) {
-//                                                System.out.println("get->" + tmp.getNutrient_id() + "," + tmp.getName() + "," + tmp.getValue() + "," + tmp.getUnit());
-//                                            }
-//                                            if (tmp.getNutrient_id() == 268) {
-//                                                String uuu =  "http://" + IP + "/SportServer/webresources/com.dy.entity.food/updateFood";
-//                                                cal = String.valueOf(tmp.getValue());
-//
-//                                                new ConnectionUtils(uuu, new ConnectionUtils.ConnectionCallback() {
-//                                                    @Override
-//                                                    public void onSuccess(Object result) {
-//                                                        System.out.println("reslut" + result);
-//                                                        Gson gson = new Gson();
-//                                                        //Json object array [{..},{}]
-//
-//                                                        JsonFood ttfood = gson.fromJson(result.toString(), new TypeToken<JsonFood>() {
-//                                                        }.getType());
-//                                                        System.out.println("food"+ttfood);
-//
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void onFail() {
-//                                                        System.out.println("cannot find food in api");
-//
-//                                                    }
-//                                                }, ffoodItem.getId(), cal);
-//
-//                                            }
-//                                        }
-//                                    }
-//
-//                                }
-//
-//                                @Override
-//                                public void onFail() {
-//                                    System.out.println("cannot find food in api");
-//
-//                                }
-//                            }, new String[]{});
-//
-//                        }
-//
-//
-//
-//
-//
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onFail() {
-//                        System.out.println("cannot find food in server");
-//
-//                    }
-//                }, s);
-
-
                 DietFragment2 dietFragment2 = new DietFragment2();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("user", u);
@@ -184,10 +87,8 @@ public class DietFragment1 extends Fragment {
 
 
                 ft = manager.beginTransaction();
-                //the old fragment exist.
-//                ft.addToBackStack();
                 ft.replace(R.id.content_frame, dietFragment2);
-//                ft.addToBackStack(dietFragment2.getTag());
+                ft.addToBackStack(null);
                 ft.commit();
 
             }

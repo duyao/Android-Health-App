@@ -29,19 +29,18 @@ import example.dy.com.homework.myUtil.StringUtils;
 public class ContentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private TextView nameText;
-    String curUserName;
+    private String curUserName;
     private DatabaseHelper dbHelper;
     private static final String IP = StringUtils.IPString;
-    //    private static final String URL = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user/findByName";
     private static final String URL = "http://" + IP + "/SportServer/webresources/com.dy.entity.user/findByName";
 
-    JsonUser user = null;
+    private JsonUser user = null;
     private static final String UPDATEUSER = "http://" + IP + "/SportServer/webresources/com.dy.entity.user";
 
-//    private static final String UPDATEUSER = "http://"+IP+":8080/SportServer/webresources/com.dy.entity.user";
 
     private TextView curNameTextView;
     private FragmentManager fragmentManager = null;
+    private Fragment mainFragment;
 
 
     @Override
@@ -107,9 +106,10 @@ public class ContentActivity extends AppCompatActivity
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("user", user);
 
-                Fragment main = new MainFragment();
-                main.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.content_frame, main).commit();
+                mainFragment = new MainFragment();
+
+                mainFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.content_frame, mainFragment, "mainFragment").commit();
 
             }
 
@@ -125,12 +125,32 @@ public class ContentActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+
+
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            System.out.println("mainFragment->" + mainFragment.getTag());
+
+            if (getFragmentManager().findFragmentByTag("mainFragment") == mainFragment) {
+                super.onBackPressed();
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user", user);
+//            MainFragment mainFragment = new MainFragment();
+                mainFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.content_frame, mainFragment, "mainFragment").commit();
+
+            }
+
         } else {
-            super.onBackPressed();
+            getFragmentManager().popBackStack();
         }
+
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
     @Override
@@ -183,7 +203,6 @@ public class ContentActivity extends AppCompatActivity
 
         //get Usr by name
         final Fragment finalNextFragment = nextFragment;
-        System.out.println("fff->" + finalNextFragment.getId());
         new ConnectionUtils(UPDATEUSER, new ConnectionUtils.ConnectionCallback() {
             @Override
             public void onSuccess(Object result) {
@@ -196,7 +215,8 @@ public class ContentActivity extends AppCompatActivity
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("user", newUser);
                 finalNextFragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.content_frame, finalNextFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, finalNextFragment).addToBackStack(null).commit();
+
 
             }
 
@@ -206,9 +226,6 @@ public class ContentActivity extends AppCompatActivity
 
             }
         }, user.getId());
-
-
-//        assert nextFragment != null;
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
