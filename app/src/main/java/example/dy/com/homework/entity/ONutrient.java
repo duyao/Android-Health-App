@@ -1,11 +1,14 @@
 package example.dy.com.homework.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * Created by dy on 2016/4/24.
  */
-public class ONutrient {
+public class ONutrient implements Parcelable{
     private int nutrient_id;
     private String name;
     private String sourcecode;
@@ -27,6 +30,27 @@ public class ONutrient {
         this.se = se;
         this.measures = measures;
     }
+
+    protected ONutrient(Parcel in) {
+        nutrient_id = in.readInt();
+        name = in.readString();
+        sourcecode = in.readString();
+        unit = in.readString();
+        dp = in.readString();
+        se = in.readString();
+    }
+
+    public static final Creator<ONutrient> CREATOR = new Creator<ONutrient>() {
+        @Override
+        public ONutrient createFromParcel(Parcel in) {
+            return new ONutrient(in);
+        }
+
+        @Override
+        public ONutrient[] newArray(int size) {
+            return new ONutrient[size];
+        }
+    };
 
     public int getNutrient_id() {
         return nutrient_id;
@@ -72,6 +96,21 @@ public class ONutrient {
                 ", se='" + se + '\'' +
                 ", measures=" + measures +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(nutrient_id);
+        dest.writeString(name);
+        dest.writeString(sourcecode);
+        dest.writeString(unit);
+        dest.writeString(dp);
+        dest.writeString(se);
     }
 }
 

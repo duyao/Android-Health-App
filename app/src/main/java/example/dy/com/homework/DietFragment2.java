@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,13 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import example.dy.com.homework.entity.JsonFood;
 import example.dy.com.homework.entity.JsonIntake;
 import example.dy.com.homework.entity.JsonUser;
+import example.dy.com.homework.entity.OFood;
 import example.dy.com.homework.entity.ONutrient;
 import example.dy.com.homework.entity.OReslut;
 import example.dy.com.homework.myUtil.ConnectionUtils;
@@ -178,6 +181,9 @@ public class DietFragment2 extends Fragment {
             @Override
             public void onClick(View v) {
 
+
+
+
                 String url = "http://api.nal.usda.gov/ndb/reports/?ndbno=" + list.get(selectedPosition).getId() +
                         "&type=f&format=json&api_key=p5aLD8nQMekwaaiWIlAQZu3Lr9LSdL75YEMK0CIP";
                 System.out.println("Myurl->" + url);
@@ -193,19 +199,47 @@ public class DietFragment2 extends Fragment {
                         OReslut apiResult = gson.fromJson(result.toString(), new TypeToken<OReslut>() {
                         }.getType());
 
-                        List<ONutrient> nutrients = apiResult.getReport().getFood().getNutrients();
+                        OFood food =apiResult.getReport().getFood();
+                        List<ONutrient> nutrients = food.getNutrients();
                         int[] nutrientList = new int[]{268, 203, 204, 205, 269};
-                        String[] nutrientName = new String[]{"Energy", "Protein", "Total lipid (fat)", "Carbohydrate", "Sugars total"};
-                        Double cal = 0.0;
+//                        String[] nutrientName = new String[]{"Energy", "Protein", "Total lipid (fat)", "Carbohydrate", "Sugars total"};
+//                        Double cal = 0.0;
+                        ArrayList<String> nName = new ArrayList<String>();
+                        ArrayList<String> nValue = new ArrayList<String>();
                         for (ONutrient tmp : nutrients) {
 //                            System.out.println(tmp);
                             for (int i = 0; i < nutrientList.length; i++) {
                                 if (tmp.getNutrient_id() == nutrientList[i]) {
+                                    nName.add(tmp.getName());
+                                    nValue.add(tmp.getValue()+" "+tmp.getUnit());
+
                                     System.out.println("get->" + tmp.getNutrient_id() + "," + tmp.getName() + "," + tmp.getValue() + "," + tmp.getUnit());
                                 }
 
                             }
                         }
+
+
+
+                        DietFragment3 dietFragment3 = new DietFragment3();
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("user", u);
+                        bundle.putString("foodName", food.getName());
+                        bundle.putString("foodCategory", food.getFg());
+                        bundle.putStringArrayList("nName", nName);
+                        bundle.putStringArrayList("nValue",nValue);
+
+
+                        dietFragment3.setArguments(bundle);
+
+
+                        ft = manager.beginTransaction();
+                        ft.replace(R.id.content_frame, dietFragment3);
+                        ft.addToBackStack(null);
+
+                        ft.commit();
+
+
 
                     }
 

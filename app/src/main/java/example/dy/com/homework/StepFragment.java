@@ -24,13 +24,13 @@ import example.dy.com.homework.myUtil.StringUtils;
  * Created by dy on 2016/4/21.
  */
 public class StepFragment extends Fragment {
-    View vStep;
-    ListView stepListView;
-    EditText stepText;
-    Button button;
-    TextView curDate;
-    DatabaseHelper databaseHelper;
-    JsonUser u;
+    private View vStep;
+    private ListView stepListView;
+    private EditText stepText;
+    private Button button;
+    private TextView curDate;
+    private DatabaseHelper databaseHelper;
+    private JsonUser u;
     private FragmentManager manager;
     private FragmentTransaction ft;
 
