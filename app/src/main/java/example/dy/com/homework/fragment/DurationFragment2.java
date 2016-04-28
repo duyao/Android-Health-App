@@ -80,7 +80,7 @@ public class DurationFragment2 extends Fragment {
                 List<JsonReport> list = gson.fromJson(result.toString(), new TypeToken<List<JsonReport>>() {
                 }.getType());
                 if (list.size() == 0) {
-                    title.setText("/(ㄒoㄒ)/~~\nNo Data Found in that Duration !");
+                    title.setText("/(ㄒoㄒ)/~~\nNo Data Recorded !");
                     title.setTextSize(30);
                 } else {
 
@@ -122,13 +122,9 @@ public class DurationFragment2 extends Fragment {
                     renderer1.setShowGrid(true);//是否显示网格
                     renderer1.setXLabelsAlign(Paint.Align.RIGHT);//刻度线与刻度标注之间的相对位置关系
                     renderer1.setYLabelsAlign(Paint.Align.CENTER);//刻度线与刻度标注之间的相对位置关系
-//        renderer1.setZoomButtonsVisible(true);//是否显示放大缩小按钮
-//        renderer1.setPanLimits(new double[]{-10, 20, -10, 40}); //设置拖动时X轴Y轴允许的最大值最小值.
-//        renderer1.setZoomLimits(new double[]{-10, 20, -10, 40});//设置放大缩小时X轴Y轴允许的最大最小值.
                     renderer1.setPanEnabled(false, false);// 上下左右都不可以移动
                     renderer1.setXTitle("Time");
                     renderer1.setYTitle("Calories");
-//        renderer1.setFitLegend(true);
                     renderer1.setLegendTextSize(40);
                     renderer1.setLabelsTextSize(40);
                     renderer1.setPointSize(10);
@@ -144,12 +140,12 @@ public class DurationFragment2 extends Fragment {
                     renderer1.setFitLegend(true);
                     renderer1.setXTitle("Consumed and Burned Calories");
                     //top, left, bottom, right
-                    renderer1.setMargins(new int[]{20, 130, 25, 10});
-                    renderer1.setPanLimits(new double[]{-10, 20, -10, 40}); //设置拖动时X轴Y轴允许的最大值最小值.
-                    renderer1.setZoomLimits(new double[]{-10, 20, -10, 40});//设置放大缩小时X轴Y轴允许的最大最小值.
+                    renderer1.setMargins(new int[]{20, 130, 40, 10});
+                    renderer1.setPanLimits(new double[]{-10, 20, -10, 40});
+                    renderer1.setZoomLimits(new double[]{-10, 20, -10, 40});
 
-                    int[] colors1 = new int[]{Color.RED, Color.MAGENTA};//每个序列的颜色设置
-                    PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.TRIANGLE};//每个序列中点的形状设置
+                    int[] colors1 = new int[]{Color.RED, Color.MAGENTA};
+                    PointStyle[] styles = new PointStyle[]{PointStyle.CIRCLE, PointStyle.TRIANGLE};
                     String[] titles = new String[]{"Consumed", "Burned"};
                     for (int i = 0; i < colors1.length; i++) {
                         XYSeriesRenderer r = new XYSeriesRenderer();
@@ -235,7 +231,7 @@ public class DurationFragment2 extends Fragment {
                     renderer2.setApplyBackgroundColor(true);
                     renderer2.setBackgroundColor(Color.WHITE); //setting background color of chart
                     renderer2.setChartTitle("Days of Achieve Goal");   //setting title of chart
-                    renderer2.setChartTitleTextSize(30);
+                    renderer2.setChartTitleTextSize(60);
                     renderer2.setShowLabels(true);
                     renderer2.setLabelsTextSize(30);
                     renderer2.setLegendTextSize(30);

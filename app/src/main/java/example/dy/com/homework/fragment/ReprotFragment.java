@@ -132,7 +132,7 @@ public class ReprotFragment extends Fragment {
         renderer1.setBackgroundColor(Color.WHITE);
         renderer1.setMarginsColor(Color.WHITE);
         //top, left, bottom, right
-        renderer1.setMargins(new int[]{0, 30, 5, 10});
+        renderer1.setMargins(new int[]{0, 60, 5, 10});
         renderer1.setPanLimits(new double[]{-10, 20, -10, 40}); //设置拖动时X轴Y轴允许的最大值最小值.
         renderer1.setZoomLimits(new double[]{-10, 20, -10, 40});//设置放大缩小时X轴Y轴允许的最大最小值.
         for (int i = 0; i < colors1.length; i++) {
@@ -186,7 +186,7 @@ public class ReprotFragment extends Fragment {
                             renderer2.setApplyBackgroundColor(true);
                             renderer2.setBackgroundColor(Color.WHITE); //setting background color of chart
                             renderer2.setChartTitle("Consumed And Burned  Calories");   //setting title of chart
-                            renderer2.setChartTitleTextSize((float) 30);
+                            renderer2.setChartTitleTextSize(45);
                             renderer2.setShowLabels(true);
                             renderer2.setLabelsTextSize(30);
                             renderer2.setLegendTextSize(30);
@@ -218,7 +218,7 @@ public class ReprotFragment extends Fragment {
                             renderer3.setApplyBackgroundColor(true);
                             renderer3.setBackgroundColor(Color.WHITE); //setting background color of chart
                             renderer3.setChartTitle("Goal And Remaining Calories");   //setting title of chart
-                            renderer3.setChartTitleTextSize(30);
+                            renderer3.setChartTitleTextSize(45);
                             renderer3.setShowLabels(true);
                             renderer3.setLabelsTextSize(30);
                             renderer3.setLegendTextSize(30);

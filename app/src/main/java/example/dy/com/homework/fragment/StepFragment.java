@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -67,19 +68,27 @@ public class StepFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("click");
+
                 boolean b = databaseHelper.addStep(stepText.getText().toString(), u.getId());
                 System.out.println(b);
-                StepFragment stepFragment = new StepFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("user", u);
-                stepFragment.setArguments(bundle);
+                if(b){
+                    Toast.makeText(getActivity(), "Add successfully!", Toast.LENGTH_SHORT).show();
 
-                ft = manager.beginTransaction();
-                ft.replace(R.id.content_frame, stepFragment);
-                ft.addToBackStack(null);
+                    StepFragment stepFragment = new StepFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("user", u);
+                    stepFragment.setArguments(bundle);
 
-                ft.commit();
+                    ft = manager.beginTransaction();
+                    ft.replace(R.id.content_frame, stepFragment);
+                    ft.addToBackStack(null);
+
+                    ft.commit();
+
+                }else{
+                    Toast.makeText(getActivity(), "Add failed!", Toast.LENGTH_SHORT).show();
+                }
+
 
 
 

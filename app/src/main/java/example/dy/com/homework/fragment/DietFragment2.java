@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -135,6 +136,7 @@ public class DietFragment2 extends Fragment {
                                     @Override
                                     public void onSuccess(Object result) {
                                         if ("204".equals(result.toString())) {
+                                            Toast.makeText(getActivity(),"Add successfully!",Toast.LENGTH_LONG).show();
                                             MainFragment mainFragment = new MainFragment();
                                             Bundle bundle = new Bundle();
                                             bundle.putParcelable("user", u);

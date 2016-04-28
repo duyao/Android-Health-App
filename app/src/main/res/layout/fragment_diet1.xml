@@ -15,13 +15,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_mode_edit_black_36dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="0dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="1/2 Select the category of food you have taken"
+            android:text="1/2 Select one category"
             android:layout_gravity="center_horizontal"
             android:textSize="25sp"
             android:gravity="center"/>
