@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import example.dy.com.homework.entity.Step;
@@ -47,14 +48,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(User.COLUMN_NAME, u.getName());
         values.put(User.COLUMN_PASSWORD, StringUtils.getPasswordEncryption(u.getPassword()));
         values.put(User.COLUMN_REGISTRATION, StringUtils.getCurTime());
-        values.put(User.COLUMN_LATITUDE, 0.0);
-        values.put(User.COLUMN_LONGITUDE, 0.0);
+        values.put(User.COLUMN_LATITUDE, StringUtils.getPosition().get("latitude"));
+        values.put(User.COLUMN_LONGITUDE, StringUtils.getPosition().get("longitude"));
         Long res = db.insert(User.TABLE_NAME, null, values);
         System.out.println("add res->" + res);
         db.close();
-        if(res == -1){
+        if (res == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -103,20 +104,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor.moveToFirst()) {
             do {
-                Step s = new Step(cursor.getInt(2),cursor.getString(3));
+                Step s = new Step(cursor.getInt(2), cursor.getString(3));
                 list.add(s);
             } while (cursor.moveToNext());
         }
 
         System.out.println("get user from sqlite");
-        for (Step step:list) {
+        for (Step step : list) {
             System.out.println(step);
         }
         db.close();
         return list;
     }
 
-    public boolean addStep(String step, String id){
+    public boolean addStep(String step, String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Step.COLUMN_USERID, id);
@@ -124,19 +125,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Step.COLUMN_DATE, StringUtils.getCurTime());
         long res = db.insert(Step.TABLE_NAME, null, values);
         db.close();
-        if(res == -1){
+        if (res == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    public void addData(String id){
+    public void addData(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        for(int i = 3; i < 10; i++){
+        for (int i = 3; i < 10; i++) {
             ContentValues values = new ContentValues();
-            int tstep = (int)(Math.random()*100);
-            String time = "2016-04-26 0"+String.valueOf(i)+":30:48";
+            int tstep = (int) (Math.random() * 100);
+            String time = "2016-04-26 0" + String.valueOf(i) + ":30:48";
             values.put(Step.COLUMN_USERID, id);
             values.put(Step.COLUMN_STEPS, tstep);
             values.put(Step.COLUMN_DATE, time);
@@ -174,6 +175,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         db.close();
         return list;
+    }
+
+    public HashMap<String, Double> getPosition(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        HashMap<String, Double> map = new HashMap<>();
+        String sql = "SELECT * FROM " + User.TABLE_NAME + " WHERE " + User.COLUMN_ID + " = '" + id + "'";
+        System.out.println("position sql->" + sql);
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            map.put(User.COLUMN_LATITUDE, cursor.getDouble(4));
+            map.put(User.COLUMN_LONGITUDE, cursor.getDouble(5));
+        }
+        return map;
     }
 
 

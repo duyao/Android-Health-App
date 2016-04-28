@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.HashMap;
+
+import example.dy.com.homework.R;
 
 /**
  * Created by dy on 2016/4/22.

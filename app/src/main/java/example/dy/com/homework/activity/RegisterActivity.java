@@ -1,9 +1,7 @@
-package example.dy.com.homework;
+package example.dy.com.homework.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -17,9 +15,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import example.dy.com.homework.R;
 import example.dy.com.homework.entity.JsonUser;
 import example.dy.com.homework.myUtil.ConnectionUtils;
 import example.dy.com.homework.myUtil.StringUtils;

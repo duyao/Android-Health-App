@@ -1,13 +1,11 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,6 +21,8 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import example.dy.com.homework.R;
+import example.dy.com.homework.adapter.FoodAdapter;
 import example.dy.com.homework.entity.JsonFood;
 import example.dy.com.homework.entity.JsonIntake;
 import example.dy.com.homework.entity.JsonUser;

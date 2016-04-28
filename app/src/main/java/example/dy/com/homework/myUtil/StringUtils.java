@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by dy on 2016/4/19.
@@ -48,12 +49,32 @@ public class StringUtils {
     public static double dayToNumber(String time) {
         String myTime = time.substring(0, 10);
         String[] ss = myTime.split("-");
-        double res = Double.valueOf(ss[0])*365 + Double.valueOf(ss[1])*30 + Double.valueOf(ss[2]);
+        double res = Double.valueOf(ss[0]) * 365 + Double.valueOf(ss[1]) * 30 + Double.valueOf(ss[2]);
         return res;
     }
 
-    public static String getImageURL(String keyword){
+    public static String getImageURL(String keyword) {
         String s = "https://www.googleapis.com/customsearch/v1?q=" + keyword + "&cx=014672565480653443522:pzdmuyfup4e&fileType=jpg&imgSize=medium&imgType=photo&safe=medium&searchType=image&key=AIzaSyCww4RAetD_OrkuKw72Zwc_bqozSVdOyns";
         return s;
+    }
+
+    public static HashMap<String, Double> getPosition() {
+        HashMap<String, Double> map = new HashMap<>();
+        map.put("latitude", 31.2681406);
+        map.put("longitude", 120.746597);
+        return map;
+    }
+
+    public static String getMapURL(String type, double latitude, double longitude) {
+        String APIKEY = "AIzaSyBLshoGEjPToryWReHwg4H20teN8oF4xDU";
+        String radius = "5000";
+
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&radius=" + radius);
+        googlePlacesUrl.append("&types=" + type);
+        googlePlacesUrl.append("&sensor=false");
+        googlePlacesUrl.append("&key=" + APIKEY);
+        return googlePlacesUrl.toString();
     }
 }

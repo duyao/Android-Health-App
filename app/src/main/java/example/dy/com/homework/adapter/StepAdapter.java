@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import example.dy.com.homework.R;
 import example.dy.com.homework.entity.Step;
 
 /**

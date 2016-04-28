@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import example.dy.com.homework.R;
 import example.dy.com.homework.entity.JsonUser;
 
 

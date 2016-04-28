@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -20,6 +20,14 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
+import example.dy.com.homework.fragment.CalTrackFragment;
+import example.dy.com.homework.fragment.CalorieGoalFragment;
+import example.dy.com.homework.fragment.DietFragment1;
+import example.dy.com.homework.fragment.MainFragment;
+import example.dy.com.homework.fragment.MapFragment;
+import example.dy.com.homework.R;
+import example.dy.com.homework.fragment.ReprotFragment;
+import example.dy.com.homework.fragment.StepFragment;
 import example.dy.com.homework.entity.JsonUser;
 import example.dy.com.homework.entity.User;
 import example.dy.com.homework.myUtil.ConnectionUtils;

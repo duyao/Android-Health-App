@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.games.achievement.Achievement;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,6 +30,8 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import java.util.ArrayList;
 import java.util.List;
 
+import example.dy.com.homework.R;
+import example.dy.com.homework.entity.JsonReport;
 import example.dy.com.homework.entity.JsonUser;
 import example.dy.com.homework.myUtil.ConnectionUtils;
 import example.dy.com.homework.myUtil.StringUtils;
@@ -79,8 +80,8 @@ public class DurationFragment2 extends Fragment {
                 List<JsonReport> list = gson.fromJson(result.toString(), new TypeToken<List<JsonReport>>() {
                 }.getType());
                 if (list.size() == 0) {
-                    title.setText("No Data Found in that Duration !");
-                    title.setTextSize(50);
+                    title.setText("/(ㄒoㄒ)/~~\nNo Data Found in that Duration !");
+                    title.setTextSize(30);
                 } else {
 
                     double[] timeX = new double[list.size()];//每个序列中点的X坐标

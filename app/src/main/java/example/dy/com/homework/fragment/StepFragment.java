@@ -1,9 +1,8 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import example.dy.com.homework.R;
+import example.dy.com.homework.adapter.StepAdapter;
 import example.dy.com.homework.entity.JsonUser;
 import example.dy.com.homework.entity.Step;
 import example.dy.com.homework.myUtil.DatabaseHelper;

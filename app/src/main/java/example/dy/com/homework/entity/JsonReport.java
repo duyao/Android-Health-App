@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.entity;
 
 import java.util.Date;
 

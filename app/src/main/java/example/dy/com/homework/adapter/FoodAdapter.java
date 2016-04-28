@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.adapter;
 
 import android.content.Context;
 import android.text.Editable;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
 
+import example.dy.com.homework.R;
 import example.dy.com.homework.entity.JsonFood;
 
 /**

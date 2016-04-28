@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -23,6 +23,8 @@ import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import java.util.List;
 
+import example.dy.com.homework.R;
+import example.dy.com.homework.entity.JsonReport;
 import example.dy.com.homework.entity.JsonUser;
 import example.dy.com.homework.myUtil.ConnectionUtils;
 import example.dy.com.homework.myUtil.DatabaseHelper;

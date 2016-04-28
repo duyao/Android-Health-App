@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -27,10 +27,10 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import org.achartengine.model.XYMultipleSeriesDataset;
 
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import example.dy.com.homework.R;
 import example.dy.com.homework.entity.JsonUser;
 import example.dy.com.homework.entity.Step;
 import example.dy.com.homework.myUtil.ConnectionUtils;

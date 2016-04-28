@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import example.dy.com.homework.R;
 import example.dy.com.homework.entity.JsonConsumed;
 import example.dy.com.homework.entity.JsonUser;
 import example.dy.com.homework.entity.Step;

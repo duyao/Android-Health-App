@@ -26,7 +26,7 @@
         <item
             android:id="@+id/nav_map"
             android:title="Map"
-            android:icon="@drawable/ic_add_location_black_36dp"/>
+            android:icon="@drawable/ic_map_black_36dp"/>
 
     </group>
 

@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,16 +11,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.List;
-
-import example.dy.com.homework.entity.JsonFood;
+import example.dy.com.homework.R;
+import example.dy.com.homework.adapter.CategoryAdapter;
 import example.dy.com.homework.entity.JsonUser;
-import example.dy.com.homework.entity.ONutrient;
-import example.dy.com.homework.entity.OReslut;
-import example.dy.com.homework.myUtil.ConnectionUtils;
 import example.dy.com.homework.myUtil.DatabaseHelper;
 import example.dy.com.homework.myUtil.StringUtils;
 

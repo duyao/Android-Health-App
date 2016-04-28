@@ -1,4 +1,4 @@
-package example.dy.com.homework;
+package example.dy.com.homework.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import example.dy.com.homework.R;
 import example.dy.com.homework.entity.JsonUser;
 
 /**
