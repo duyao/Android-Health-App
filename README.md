@@ -1,5 +1,18 @@
 
-[TOC]
+- [Android-Health-App](#android-health-app)
+  - [Introduction](#introduction)
+  - [Functions](#functions)
+    - [Login](#login)
+    - [Creating a new account](#creating-a-new-account)
+    - [Welcome screen](#welcome-screen)
+    - [Navigation drawer](#navigation-drawer)
+    - [Calorie goal](#calorie-goal)
+    - [Daily diet](#daily-diet)
+    - [Recording Step](#recording-step)
+    - [Tracking calorie](#tracking-calorie)
+    - [Calorie Report](#calorie-report)
+    - [Map](#map)
+- [Requirements](#requirements)
 
 
 # Android-Health-App
@@ -10,6 +23,7 @@ The project aim at recording calories of intake and consumed.
 
 ![animation](http://7xilc8.com1.z0.glb.clouddn.com/animation.gif)
 
+If animation is not displaying, Click here [animation](http://7xilc8.com1.z0.glb.clouddn.com/animation.gif)
 
 
 ## Introduction
@@ -111,8 +125,9 @@ If your duration is valid, you can get 3 graphs – the first is consumed and bu
 
 ### Map
 
+![Map](http://7xilc8.com1.z0.glb.clouddn.com/health%20android/S60428-202210.jpg)
 
-
+At the top, there is text field where you can type somewhere, and after you press show, these relevant places are shown on the map.
 
 # Requirements
 
